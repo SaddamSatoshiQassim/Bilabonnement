@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Dashboard</title>
-
+    <meta charset="UTF-8">
+    <title>dashboard</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
@@ -21,15 +19,21 @@
 
         <p>Ledige:
             <span th:text="${availableCount}">
-</span></p>
+
+            </span>
+        </p>
 
         <p>Udlejede:
             <span th:text="${rentedCount}">
-</span></p>
+
+            </span>
+        </p>
 
         <p>Skadede:
             <span th:text="${damagedCount}">
-</span></p>
+
+            </span>
+        </p>
 
     </div>
 
@@ -52,8 +56,10 @@
 
             <td th:text="${car.model}"></td>
 
-            <td th:text="${car.status}"></td>
-
+            <td th:text="${car.status}"
+                th:classappend="${car.status.name() == 'AVAILABLE'} ? 'status-available' :
+                    (${car.status.name() == 'RENTED'} ? 'status-rented' : 'status-damaged')">
+            </td>
         </tr>
 
     </table>
