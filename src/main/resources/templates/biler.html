@@ -3,8 +3,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Biler</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <body>
@@ -16,39 +17,321 @@
 
     <h1>Biler</h1>
 
-    <input
-            type="text"
-            placeholder="Søg biler...">
+    <input type="text" placeholder="Søg biler...">
 
-    <table>
+    <div class="car-grid">
 
-        <tr th:each="car : ${cars}">
+        <details class="car-card" data-name="bmw x5">
+            <summary>
+                <img src="/Images/bmw-x5.jpg" class="car-img">
+                <h3>BMW X5</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
-            <td th:text="${car.vin}">
-            </td>
+            <div class="car-info">
+                <p><b>Bil ID:</b> 1</p>
+                <p><b>VIN:</b> VIN0001</p>
+                <p><b>Mærke:</b> BMW</p>
+                <p><b>Model:</b> X5</p>
+                <p><b>Udlejningspris:</b> 1.495 kr / dag</p>
+                <p><b>Depositum:</b> 8.000 kr</p>
+                <p><b>Km inkluderet:</b> 200 km / dag</p>
+                <p><b>Kørte kilometer:</b> 45.000 km</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2022</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
 
-            <td th:text="${car.brand}">
-            </td>
+        <details class="car-card" data-name="bmw 320i">
+            <summary>
+                <img src="/Images/bmw-320i.jpg" class="car-img">
+                <h3>BMW 320i</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
-            <td th:text="${car.model}">
-            </td>
+            <div class="car-info">
+                <p><b>Bil ID:</b> 2</p>
+                <p><b>VIN:</b> VIN0002</p>
+                <p><b>Mærke:</b> BMW</p>
+                <p><b>Model:</b> 320i</p>
+                <p><b>Udlejningspris:</b> 995 kr / dag</p>
+                <p><b>Depositum:</b> 5.000 kr</p>
+                <p><b>Km inkluderet:</b> 150 km / dag</p>
+                <p><b>Kørte kilometer:</b> 62.000 km</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2021</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
 
-            <td th:text="${car.status}">
-            </td>
+        <details class="car-card" data-name="bmw 520d">
+            <summary>
+                <img src="/Images/bmw-520d.jpg" class="car-img">
+                <h3>BMW 520d</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
-        </tr>
+            <div class="car-info">
+                <p><b>Bil ID:</b> 3</p>
+                <p><b>VIN:</b> VIN0003</p>
+                <p><b>Mærke:</b> BMW</p>
+                <p><b>Model:</b> 520d</p>
+                <p><b>Udlejningspris:</b> 1.150 kr / dag</p>
+                <p><b>Depositum:</b> 6.000 kr</p>
+                <p><b>Km inkluderet:</b> 180 km / dag</p>
+                <p><b>Kørte kilometer:</b> 58.000 km</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2020</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
 
-    </table>
+        <details class="car-card" data-name="mercedes e200">
+            <summary>
+                <img src="/Images/mercedes-e200.jpg" class="car-img">
+                <h3>Mercedes E200</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
-    <div class="carousel">
+            <div class="car-info">
+                <p><b>Bil ID:</b> 4</p>
+                <p><b>VIN:</b> VIN0004</p>
+                <p><b>Mærke:</b> Mercedes</p>
+                <p><b>Model:</b> E200</p>
+                <p><b>Udlejningspris:</b> 1.250 kr / dag</p>
+                <p><b>Depositum:</b> 7.000 kr</p>
+                <p><b>Km inkluderet:</b> 180 km / dag</p>
+                <p><b>Kørte kilometer:</b> 34.000 km</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2022</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
 
-        <button class="left">←</button>
+        <details class="car-card" data-name="mercedes e220">
+            <summary>
+                <img src="/Images/mercedes-e220.jpg" class="car-img">
+                <h3>Mercedes E220</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
-        <img src="/img/car1.jpg" class="car-img">
-        <img src="/img/car2.jpg" class="car-img">
-        <img src="/img/car3.jpg" class="car-img">
+            <div class="car-info">
+                <p><b>Bil ID:</b> 5</p>
+                <p><b>VIN:</b> VIN0005</p>
+                <p><b>Mærke:</b> Mercedes</p>
+                <p><b>Model:</b> E220</p>
+                <p><b>Udlejningspris:</b> 1.350 kr / dag</p>
+                <p><b>Depositum:</b> 7.500 kr</p>
+                <p><b>Km inkluderet:</b> 200 km / dag</p>
+                <p><b>Kørte kilometer:</b> 28.000 km</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2023</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
 
-        <button class="right">→</button>
+        <details class="car-card" data-name="mercedes glc">
+            <summary>
+                <img src="/Images/mercedes-glc.jpg" class="car-img">
+                <h3>Mercedes GLC</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 6</p>
+                <p><b>VIN:</b> VIN0006</p>
+                <p><b>Mærke:</b> Mercedes</p>
+                <p><b>Model:</b> GLC</p>
+                <p><b>Udlejningspris:</b> 1.495 kr / dag</p>
+                <p><b>Depositum:</b> 8.000 kr</p>
+                <p><b>Km inkluderet:</b> 200 km / dag</p>
+                <p><b>Kørte kilometer:</b> 21.000 km</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2023</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
+
+        <details class="car-card" data-name="toyota auris">
+            <summary>
+                <img src="/Images/toyota-auris.jpg" class="car-img">
+                <h3>Toyota Auris</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 7</p>
+                <p><b>VIN:</b> VIN0007</p>
+                <p><b>Mærke:</b> Toyota</p>
+                <p><b>Model:</b> Auris</p>
+                <p><b>Udlejningspris:</b> 699 kr / dag</p>
+                <p><b>Depositum:</b> 3.500 kr</p>
+                <p><b>Km inkluderet:</b> 120 km / dag</p>
+                <p><b>Kørte kilometer:</b> 51.000 km</p>
+                <p><b>Brændstof:</b> Hybrid</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2020</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
+
+        <details class="car-card" data-name="toyota yaris">
+            <summary>
+                <img src="/Images/toyota-yaris.jpg" class="car-img">
+                <h3>Toyota Yaris</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 8</p>
+                <p><b>VIN:</b> VIN0008</p>
+                <p><b>Mærke:</b> Toyota</p>
+                <p><b>Model:</b> Yaris</p>
+                <p><b>Udlejningspris:</b> 599 kr / dag</p>
+                <p><b>Depositum:</b> 3.000 kr</p>
+                <p><b>Km inkluderet:</b> 100 km / dag</p>
+                <p><b>Kørte kilometer:</b> 19.000 km</p>
+                <p><b>Brændstof:</b> Hybrid</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2022</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
+
+        <details class="car-card" data-name="toyota corolla">
+            <summary>
+                <img src="/Images/toyota-corolla.jpg" class="car-img">
+                <h3>Toyota Corolla</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 9</p>
+                <p><b>VIN:</b> VIN0009</p>
+                <p><b>Mærke:</b> Toyota</p>
+                <p><b>Model:</b> Corolla</p>
+                <p><b>Udlejningspris:</b> 799 kr / dag</p>
+                <p><b>Depositum:</b> 4.000 kr</p>
+                <p><b>Km inkluderet:</b> 150 km / dag</p>
+                <p><b>Kørte kilometer:</b> 26.000 km</p>
+                <p><b>Brændstof:</b> Hybrid</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2021</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
+
+        <details class="car-card" data-name="volkswagen golf">
+            <summary>
+                <img src="/Images/volkswagen-golf.jpg" class="car-img">
+                <h3>Volkswagen Golf</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 10</p>
+                <p><b>VIN:</b> VIN0010</p>
+                <p><b>Mærke:</b> Volkswagen</p>
+                <p><b>Model:</b> Golf</p>
+                <p><b>Udlejningspris:</b> 749 kr / dag</p>
+                <p><b>Depositum:</b> 4.000 kr</p>
+                <p><b>Km inkluderet:</b> 150 km / dag</p>
+                <p><b>Kørte kilometer:</b> 38.000 km</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2021</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
+
+        <details class="car-card" data-name="volkswagen passat">
+            <summary>
+                <img src="/Images/volkswagen-pasat.jpg" class="car-img">
+                <h3>Volkswagen Passat</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 11</p>
+                <p><b>VIN:</b> VIN0011</p>
+                <p><b>Mærke:</b> Volkswagen</p>
+                <p><b>Model:</b> Passat</p>
+                <p><b>Udlejningspris:</b> 899 kr / dag</p>
+                <p><b>Depositum:</b> 5.000 kr</p>
+                <p><b>Km inkluderet:</b> 180 km / dag</p>
+                <p><b>Kørte kilometer:</b> 47.000 km</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Årgang:</b> 2022</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
+
+        <details class="car-card" data-name="volkswagen polo">
+            <summary>
+                <img src="/Images/volkswagen-polo.jpg" class="car-img">
+                <h3>Volkswagen Polo</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 12</p>
+                <p><b>VIN:</b> VIN0012</p>
+                <p><b>Mærke:</b> Volkswagen</p>
+                <p><b>Model:</b> Polo</p>
+                <p><b>Udlejningspris:</b> 599 kr / dag</p>
+                <p><b>Depositum:</b> 3.000 kr</p>
+                <p><b>Km inkluderet:</b> 120 km / dag</p>
+                <p><b>Kørte kilometer:</b> 22.000 km</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Gear:</b> Manuel</p>
+                <p><b>Årgang:</b> 2021</p>
+                <p><b>Antal sæder:</b> 5</p>
+                <p><b>Aircondition:</b> Ja</p>
+                <p><b>Navigation:</b> Ja</p>
+                <p><b>Status:</b> Ledig</p>
+            </div>
+        </details>
 
     </div>
 

@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS bilabonnement;
 
 USE bilabonnement;
 
+
+
 CREATE TABLE customer (
                           customer_id INT AUTO_INCREMENT PRIMARY KEY,
                           name VARCHAR(100) NOT NULL,
@@ -48,4 +50,15 @@ CREATE TABLE damage_line (
                              price DECIMAL(15,2) NOT NULL,
 
                              FOREIGN KEY (report_id) REFERENCES damage_report(report_id)
+);
+CREATE TABLE users (
+
+                       user_id INT PRIMARY KEY AUTO_INCREMENT,
+
+                       username VARCHAR(50),
+
+                       password VARCHAR(50),
+
+                       role VARCHAR(50)
+
 );

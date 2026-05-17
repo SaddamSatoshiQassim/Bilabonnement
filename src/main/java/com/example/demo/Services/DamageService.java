@@ -2,20 +2,15 @@ package com.example.demo.Services;
 
 import com.example.demo.Models.DamageLine;
 import com.example.demo.Models.DamageReport;
-import com.example.demo.Repositories.DamageReportRepository;
-import com.example.demo.Repositories.JDBCDamageReportRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DamageService {
 
-    private final DamageReportRepository repository;
-
-    public DamageService(DamageReportRepository repository) {
-        this.repository = repository;
-    }
+    private final List<DamageReport> damageReports = new ArrayList<>();
 
     public double calculateTotalDamagePrice(List<DamageLine> damageLines) {
         return damageLines.stream()
@@ -24,22 +19,26 @@ public class DamageService {
     }
 
     public List<DamageReport> getAllDamageReports() {
-        return repository.findAll();
+        return new ArrayList<>(damageReports);
     }
 
     public DamageReport getDamageReportById(int id) {
-        return repository.findById(id);
+        return damageReports.stream()
+                .filter(report -> report.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public void addDamageReport(DamageReport damageReport) {
-        repository.save(damageReport);
+        damageReports.removeIf(report -> report.getId() == damageReport.getId());
+        damageReports.add(damageReport);
     }
 
     public void updateDamageReport(DamageReport damageReport) {
-        repository.update(damageReport);
+        addDamageReport(damageReport);
     }
 
     public void deleteDamageReportById(int id) {
-        repository.deleteById(id);
+        damageReports.removeIf(report -> report.getId() == id);
     }
 }
