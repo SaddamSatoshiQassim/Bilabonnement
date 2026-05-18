@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <title>Returnerede biler</title>
@@ -12,9 +11,9 @@
 </div>
 
 <div class="content">
-<h1>Returnerede biler</h1>
-<div class="status-card green">KL44444</div>
-<div class="status-card green">MN55555</div>
+    <h1>Returnerede biler</h1>
+    <div th:each="car : ${cars}" class="status-card green" th:text="${car.vin}"></div>
 </div>
+
 </body>
 </html>

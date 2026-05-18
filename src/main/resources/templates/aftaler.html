@@ -1,68 +1,91 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
+    <meta charset="UTF-8">
+    <title>Aftaler</title>
     <link rel="stylesheet" th:href="@{/style.css}">
-
 </head>
 
 <body>
 
-<div th:replace="~{fragments/sidebar::sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar::sidebar}"></div>
 
 <div class="content">
 
     <div class="topbar">
-
-        <h1>Aftaler</h1>
+        <h1>Bil Reservationer</h1>
 
         <a th:href="@{/aftaler/opret}">
-            <button>Opret</button>
+            <button>Opret Aftale</button>
         </a>
-
     </div>
 
-    <h1>Opret aftale</h1>
+    <table>
 
-    <form th:action="@{/aftaler/gem}"
-          th:object="${agreement}"
-          method="post">
+        <tr>
+            <th>Kunde Navn</th>
+            <th>Kunde Email</th>
+            <th>Nummerplade</th>
+            <th>Start dato</th>
+            <th>Slut dato</th>
+            <th>Handling / Pris</th>
+        </tr>
 
-        <label>Start dato</label>
-        <input type="date" th:field="*{startDate}">
+        <th:block th:each="agreement, stat : ${agreements}">
 
-        <label>Slut dato</label>
-        <input type="date" th:field="*{endDate}">
+            <tr>
+                <td th:text="${agreement.customerName}"></td>
+                <td th:text="${agreement.customerEmail}"></td>
+                <td th:text="${agreement.carPlate}"></td>
+                <td th:text="${agreement.startDate}"></td>
+                <td th:text="${agreement.endDate}"></td>
 
-        <label>Vælg kunde</label>
-        <select th:field="*{customer.id}">
-            <option th:each="c : ${customers}"
-                    th:value="${c.id}"
-                    th:text="${c.name}">
-            </option>
-        </select>
+                <td>
 
-        <label>Vælg bil</label>
-        <select th:field="*{car.id}">
-            <option th:each="car : ${cars}"
-                    th:value="${car.id}"
-                    th:text="${car.brand + ' ' + car.model}">
-            </option>
-        </select>
+                    <button th:if="${!agreement.settled}"
+                            th:onclick="'document.getElementById(\'calc-' + ${stat.index} + '\').style.display=\'table-row\''">
+                        Beregn overkørsel
+                    </button>
 
-        <p>
-            Pris:
-            <span th:text="${calculatedPrice}"></span>
-        </p>
+                    <span th:if="${agreement.settled}"
+                          th:text="${agreement.totalPrice + ' kr.'}">
+                    </span>
 
-        <button>Gem</button>
+                </td>
+            </tr>
 
-    </form>
+            <tr th:id="'calc-' + ${stat.index}" style="display:none;">
+                <td colspan="6">
+
+                    <form th:action="@{/aftaler/afregn/{id}(id=${agreement.id})}"
+                          method="post">
+
+                        <input type="number"
+                               name="paidKilometers"
+                               placeholder="Kilometer betalt for">
+
+                        <input type="number"
+                               name="drivenKilometers"
+                               placeholder="Kilometer kørt i alt">
+
+                        <button type="submit">Afregn Nu</button>
+
+                        <button type="button"
+                                th:onclick="'document.getElementById(\'calc-' + ${stat.index} + '\').style.display=\'none\''">
+                            Annuller
+                        </button>
+
+                    </form>
+
+                </td>
+            </tr>
+
+        </th:block>
+
+    </table>
+
 </div>
 
 </body>
-
 </html>
