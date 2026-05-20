@@ -70,3 +70,4 @@ class RentalAgreementValidationTest {
         assertFalse(isValid);
     }
 }
+

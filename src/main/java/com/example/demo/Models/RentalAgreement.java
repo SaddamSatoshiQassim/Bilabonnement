@@ -15,6 +15,9 @@ public class RentalAgreement {
 
 
 
+    public RentalAgreement() {
+    }
+
     public RentalAgreement(LocalDate startDate, LocalDate endDate) {
         this(0, startDate, endDate, BigDecimal.ZERO, null, null,null,null);
     }

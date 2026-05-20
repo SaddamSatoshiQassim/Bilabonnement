@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.Models.DamageLine;
-import com.example.demo.Repositories.JDBCDamageReportRepository;
 import com.example.demo.Services.DamageService;
 import org.junit.jupiter.api.Test;
 
@@ -61,5 +60,5 @@ class DamageReportServiceTest {
         // Assert
         assertEquals(expectedTotalPrice, actualTotalPrice);
     }
-
 }
+

@@ -16,3 +16,4 @@ public interface DamageReportRepository {
 
     public void deleteById(int id);
 }
+

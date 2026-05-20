@@ -1,61 +1,65 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>dashboard</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
+
 <body>
 
-<div th:replace="~{fragments/sidebar :: sidebar}">
+<div th:replace="~{fragments/sidebar::sidebar}">
 </div>
 
 <div class="content">
 
     <h1>Dashboard</h1>
 
-    <div class="stats">
+    <div class="card">
 
-        <div>
-            <h2>12</h2>
-            <p>Returnerede biler</p>
-        </div>
+        <p>Ledige:
+            <span th:text="${availableCount}">
 
-        <div>
-            <h2>7</h2>
-            <p>Udlejede biler</p>
-        </div>
+            </span>
+        </p>
 
-        <div>
-            <h2>5</h2>
-            <p>Ledige biler</p>
-        </div>
+        <p>Udlejede:
+            <span th:text="${rentedCount}">
+
+            </span>
+        </p>
+
+        <p>Skadede:
+            <span th:text="${damagedCount}">
+
+            </span>
+        </p>
 
     </div>
-
-    <h2>Status</h2>
 
     <table>
 
         <tr>
-            <th>Nummerplade</th>
+
+            <th>VIN</th>
+            <th>Mærke</th>
+            <th>Model</th>
             <th>Status</th>
+
         </tr>
 
         <tr th:each="car : ${cars}">
 
             <td th:text="${car.vin}"></td>
 
-            <td>
+            <td th:text="${car.brand}"></td>
 
-            <span th:text="${car.status}"
-                  th:classappend="${car.status == 'AVAILABLE'} ? 'green' :
-                                   (${car.status == 'DAMAGED'} ? 'red' :
-                                   (${car.status == 'RETURNED'} ? 'blue' : 'yellow'))">
-            </span>
+            <td th:text="${car.model}"></td>
 
+            <td th:text="${car.status}"
+                th:classappend="${car.status.name() == 'AVAILABLE'} ? 'status-available' :
+                    (${car.status.name() == 'RENTED'} ? 'status-rented' : 'status-damaged')">
             </td>
-
         </tr>
 
     </table>
@@ -63,4 +67,5 @@
 </div>
 
 </body>
+
 </html>
