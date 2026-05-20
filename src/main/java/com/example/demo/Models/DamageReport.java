@@ -4,13 +4,15 @@ import java.util.List;
 
 public class DamageReport {
     private int id;
+    private int carId;
     private LocalDate reportDate;
     private String description;
     private List<DamageLine> damageLines;
 
 
-    public DamageReport(int id, LocalDate reportDate, String description) {
+    public DamageReport(int id,int carId ,LocalDate reportDate, String description) {
         this.id = id;
+        this.carId = carId;
         this.reportDate = reportDate;
         this.description = description;
     }
@@ -21,6 +23,14 @@ public class DamageReport {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
     }
 
     public LocalDate getReportDate() {

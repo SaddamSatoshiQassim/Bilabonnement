@@ -1,11 +1,14 @@
 package com.example.demo.Repositories;
 
+import com.example.demo.Models.DamageLine;
 import com.example.demo.Models.DamageReport;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class JDBCDamageReportRepository implements DamageReportRepository {
@@ -14,45 +17,83 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
     String user = System.getenv("DB_USER");
     String password = System.getenv("DB_PASSWORD");
 
-    private final DamageLineRepository damageLineRepository;
-
-    public JDBCDamageReportRepository(DamageLineRepository damageLineRepository) {
-        this.damageLineRepository = damageLineRepository;
-    }
-
     @Override
     public List<DamageReport> findAll() {
-        List<DamageReport> damageReports = new ArrayList<>();
-        String sql = "SELECT * FROM damage_report";
+        Map<Integer, DamageReport> reports = new LinkedHashMap<>();
+
+        String sql = """
+                SELECT 
+                    dr.report_id,
+                    dr.car_id,
+                    dr.report_date,
+                    dr.description AS report_description,
+                    dl.damage_line_id,
+                    dl.description AS line_description,
+                    dl.price
+                FROM damage_report dr
+                LEFT JOIN damage_line dl 
+                    ON dr.report_id = dl.report_id
+                """;
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                DamageReport damageReport = new DamageReport(
-                        resultSet.getInt("report_id"),
-                        resultSet.getDate("report_date").toLocalDate(),
-                        resultSet.getString("description")
-                );
+                int reportId = resultSet.getInt("report_id");
 
-                damageReport.setDamageLines(
-                        damageLineRepository.findByReportId(damageReport.getId())
-                );
+                DamageReport report = reports.get(reportId);
 
-                damageReports.add(damageReport);
+                if (report == null) {
+                    report = new DamageReport(
+                            resultSet.getInt("report_id"),
+                            resultSet.getInt("car_id"),
+                            resultSet.getDate("report_date").toLocalDate(),
+                            resultSet.getString("report_description")
+                    );
+
+                    reports.put(reportId, report);
+                }
+
+                int damageLineId = resultSet.getInt("damage_line_id");
+
+                if (damageLineId != 0) {
+                    DamageLine damageLine = new DamageLine(
+                            damageLineId,
+                            reportId,
+                            resultSet.getString("line_description"),
+                            resultSet.getBigDecimal("price")
+                    );
+
+                    report.addDamageLine(damageLine);
+                }
             }
 
         } catch (SQLException e) {
             System.out.println("Fejl: kunne ikke hente skader " + e.getMessage());
         }
 
-        return damageReports;
+        return new ArrayList<>(reports.values());
     }
 
     @Override
     public DamageReport findById(int id) {
-        String sql = "SELECT * FROM damage_report WHERE report_id = ?";
+        String sql = """
+                SELECT 
+                    dr.report_id,
+                    dr.car_id,
+                    dr.report_date,
+                    dr.description AS report_description,
+                    dl.damage_line_id,
+                    dl.description AS line_description,
+                    dl.price
+                FROM damage_report dr
+                LEFT JOIN damage_line dl 
+                    ON dr.report_id = dl.report_id
+                WHERE dr.report_id = ?
+                """;
+
+        DamageReport report = null;
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -61,36 +102,47 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                DamageReport damageReport = new DamageReport(
-                        resultSet.getInt("report_id"),
-                        resultSet.getDate("report_date").toLocalDate(),
-                        resultSet.getString("description")
-                );
+            while (resultSet.next()) {
+                if (report == null) {
+                    report = new DamageReport(
+                            resultSet.getInt("report_id"),
+                            resultSet.getInt("car_id"),
+                            resultSet.getDate("report_date").toLocalDate(),
+                            resultSet.getString("report_description")
+                    );
+                }
 
-                damageReport.setDamageLines(
-                        damageLineRepository.findByReportId(damageReport.getId())
-                );
+                int damageLineId = resultSet.getInt("damage_line_id");
 
-                return damageReport;
+                if (damageLineId != 0) {
+                    DamageLine damageLine = new DamageLine(
+                            damageLineId,
+                            resultSet.getInt("report_id"),
+                            resultSet.getString("line_description"),
+                            resultSet.getBigDecimal("price")
+                    );
+
+                    report.addDamageLine(damageLine);
+                }
             }
 
         } catch (SQLException e) {
             System.out.println("Fejl: kunne ikke finde skade " + e.getMessage());
         }
 
-        return null;
+        return report;
     }
 
     @Override
     public void save(DamageReport damageReport) {
-        String sql = "INSERT INTO damage_report (report_date, description) VALUES (?, ?)";
+        String sql = "INSERT INTO damage_report (car_id, report_date, description) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setDate(1, Date.valueOf(damageReport.getReportDate()));
-            statement.setString(2, damageReport.getDescription());
+            statement.setInt(1, damageReport.getCarId());
+            statement.setDate(2, Date.valueOf(damageReport.getReportDate()));
+            statement.setString(3, damageReport.getDescription());
 
             statement.executeUpdate();
 
@@ -101,14 +153,19 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
 
     @Override
     public void update(DamageReport damageReport) {
-        String sql = "UPDATE damage_report SET report_date = ?, description = ? WHERE report_id = ?";
+        String sql = """
+                UPDATE damage_report 
+                SET car_id = ?, report_date = ?, description = ?
+                WHERE report_id = ?
+                """;
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setDate(1, Date.valueOf(damageReport.getReportDate()));
-            statement.setString(2, damageReport.getDescription());
-            statement.setInt(3, damageReport.getId());
+            statement.setInt(1, damageReport.getCarId());
+            statement.setDate(2, Date.valueOf(damageReport.getReportDate()));
+            statement.setString(3, damageReport.getDescription());
+            statement.setInt(4, damageReport.getId());
 
             statement.executeUpdate();
 
@@ -119,13 +176,20 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
 
     @Override
     public void deleteById(int id) {
-        String sql = "DELETE FROM damage_report WHERE report_id = ?";
+        String deleteLinesSql = "DELETE FROM damage_line WHERE report_id = ?";
+        String deleteReportSql = "DELETE FROM damage_report WHERE report_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
 
-            statement.setInt(1, id);
-            statement.executeUpdate();
+            try (PreparedStatement statement = connection.prepareStatement(deleteLinesSql)) {
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(deleteReportSql)) {
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.out.println("Fejl: kunne ikke slette skade " + e.getMessage());
