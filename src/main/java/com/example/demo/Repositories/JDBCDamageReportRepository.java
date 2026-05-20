@@ -78,20 +78,7 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
 
     @Override
     public DamageReport findById(int id) {
-        String sql = """
-                SELECT 
-                    dr.report_id,
-                    dr.car_id,
-                    dr.report_date,
-                    dr.description AS report_description,
-                    dl.damage_line_id,
-                    dl.description AS line_description,
-                    dl.price
-                FROM damage_report dr
-                LEFT JOIN damage_line dl 
-                    ON dr.report_id = dl.report_id
-                WHERE dr.report_id = ?
-                """;
+        String sql = "SELECT dr.report_id, dr.car_id, dr.report_date, dr.description AS report_description, dl.damage_line_id, dl.description AS line_description, dl.price FROM damage_report dr LEFT JOIN damage_line dl ON dr.report_id = dl.report_id WHERE dr.report_id = ?";
 
         DamageReport report = null;
 
