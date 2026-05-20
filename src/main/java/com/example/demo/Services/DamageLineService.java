@@ -2,7 +2,7 @@ package com.example.demo.Services;
 
 import com.example.demo.Models.DamageLine;
 import com.example.demo.Repositories.DamageLineRepository;
-import com.example.demo.Repositories.JDBCDamageLineRepository;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,9 @@ public class DamageLineService {
 
     public DamageLine getDamageLineById(int id) {
         return damageLineRepository.findById(id);
+    }
+    public List<DamageLine> getDamagelineByReporId(int reportId){
+        return damageLineRepository.findByReportId(reportId);
     }
 
     @Transactional

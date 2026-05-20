@@ -6,6 +6,7 @@ import com.example.demo.Repositories.DamageReportRepository;
 import com.example.demo.Repositories.JDBCDamageReportRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -18,10 +19,10 @@ public class DamageService {
         this.repository = repository;
     }
 
-    public double calculateTotalDamagePrice(List<DamageLine> damageLines) {
+    public BigDecimal calculateTotalDamagePrice(List<DamageLine> damageLines) {
         return damageLines.stream()
-                .mapToDouble(DamageLine::getPrice)
-                .sum();
+                .map(DamageLine::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public List<DamageReport> getAllDamageReports() {
