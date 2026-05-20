@@ -19,7 +19,7 @@ class DamageReportServiceTest {
         );
         double expectedTotalPrice = 1500.00;
 
-        DamageService damageService = new DamageService(new FakeDamageRepository());
+        DamageService damageService = new DamageService();
 
         // Act
         double actualTotalPrice = damageService.calculateTotalDamagePrice(damageLines);
@@ -38,7 +38,7 @@ class DamageReportServiceTest {
         );
         double expectedTotalPrice = 4000.00;
 
-        DamageService damageService = new DamageService(new FakeDamageRepository());
+        DamageService damageService = new DamageService();
 
         // Act
         double actualTotalPrice = damageService.calculateTotalDamagePrice(damageLines);
@@ -53,7 +53,7 @@ class DamageReportServiceTest {
         List<DamageLine> damageLines = List.of();
         double expectedTotalPrice = 0.00;
 
-        DamageService damageService = new DamageService(new FakeDamageRepository());
+        DamageService damageService = new DamageService();
 
         // Act
         double actualTotalPrice = damageService.calculateTotalDamagePrice(damageLines);
@@ -61,7 +61,5 @@ class DamageReportServiceTest {
         // Assert
         assertEquals(expectedTotalPrice, actualTotalPrice);
     }
-        // Fake repository (bruges kun til test)
-    static class FakeDamageRepository extends JDBCDamageReportRepository {
-    }
+
 }

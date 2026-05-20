@@ -13,6 +13,7 @@ public class DamageService {
 
     private final DamageReportRepository repository;
 
+
     public DamageService(DamageReportRepository repository) {
         this.repository = repository;
     }

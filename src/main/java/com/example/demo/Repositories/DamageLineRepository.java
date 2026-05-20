@@ -15,4 +15,5 @@ public interface DamageLineRepository {
     void update(DamageLine damageLine);
 
     void deleteById(int id);
+    List<DamageLine> findByReportId(int reportId);
 }

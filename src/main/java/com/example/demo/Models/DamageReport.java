@@ -1,10 +1,12 @@
 package com.example.demo.Models;
 import java.time.LocalDate;
+import java.util.List;
 
 public class DamageReport {
     private int id;
     private LocalDate reportDate;
     private String description;
+    private List<DamageLine> damageLines;
 
 
     public DamageReport(int id, LocalDate reportDate, String description) {
@@ -35,5 +37,16 @@ public class DamageReport {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<DamageLine> getDamageLines() {
+        return damageLines;
+    }
+
+    public void setDamageLines(List<DamageLine> damageLines) {
+        this.damageLines = damageLines;
+    }
+    public void addDamageLine(DamageLine damageLine){
+        this.damageLines.add(damageLine);
     }
 }

@@ -4,22 +4,28 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RentalAgreement {
-   private int id;
-   private LocalDate startDate;
-   private LocalDate endDate;
-   private BigDecimal rentalPrice;
-   Location pickupLocation;
-   Location returnLocation;
+    private int id;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private BigDecimal rentalPrice;
+    private Car car;
+    private Customer customer;
+    private Location pickupLocation;
+    private Location returnLocation;
+
+
 
     public RentalAgreement(LocalDate startDate, LocalDate endDate) {
-        this(0, startDate, endDate, BigDecimal.ZERO, null, null);
+        this(0, startDate, endDate, BigDecimal.ZERO, null, null,null,null);
     }
 
-    public RentalAgreement(int id, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Location pickupLocation, Location returnLocation) {
+    public RentalAgreement(int id, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Customer customer, Car car, Location pickupLocation, Location returnLocation) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.rentalPrice = rentalPrice;
+        this.customer = customer;
+        this.car = car;
         this.pickupLocation = pickupLocation;
         this.returnLocation = returnLocation;
     }
@@ -54,6 +60,22 @@ public class RentalAgreement {
 
     public void setRentalPrice(BigDecimal rentalPrice) {
         this.rentalPrice = rentalPrice;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Location getPickupLocation() {
