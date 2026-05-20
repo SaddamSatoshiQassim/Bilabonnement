@@ -1,41 +1,34 @@
+
 package com.example.demo.Services;
 
 import com.example.demo.Models.User;
 import com.example.demo.Repositories.JDBCUserRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 
-    private JDBCUserRepository userRepository =
-            new JDBCUserRepository();
+    private final JDBCUserRepository userRepository;
 
-    public User login(String username,
-                      String password,
-                      String email) {
+    public UserService(JDBCUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-        if(!email.contains("@") ||
-                !email.contains(".")) {
+    public User login(String username, String password) {
 
-            System.out.println("Ugyldig email");
+        User user = userRepository.findByUsername(username);
 
-            return null;
-        }
-
-        if(password.length() < 8) {
-
-            System.out.println("Password skal være mindst 8 tegn");
-
-            return null;
-        }
-
-        User user =
-                userRepository.findByUsername(username);
-
-        if(user != null &&
-                user.getPassword().equals(password)) {
-
+        if (user != null && user.getPassword().equals(password)) {
             return user;
         }
 
         return null;
+    }
+
+    public void createUser(String username, String password) {
+
+        User user = new User(0, username, password);
+
+        userRepository.save(user);
     }
 }
