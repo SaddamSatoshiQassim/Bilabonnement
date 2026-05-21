@@ -13,6 +13,9 @@ public class Customer {
         this.email = email;
         this.phone = phone;
     }
+    public Customer(){
+
+    }
 
     public void updateContactInfo(String email, String phone) {
         this.email = email;
@@ -33,5 +36,25 @@ public class Customer {
 
     public String getPhone() {
         return phone;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setSecondphone(String secondphone) {
+        this.secondphone = secondphone;
     }
 }
