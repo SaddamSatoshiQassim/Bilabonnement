@@ -1,14 +1,13 @@
-package com.example.demo;
+package com.example.demo.Services;
 
 import com.example.demo.Models.DamageLine;
-import com.example.demo.Services.DamageService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DamageReportServiceTest {
+class DamageServiceTest {
 
     @Test
     void shouldReturnTotalPriceForOneDamage() {
