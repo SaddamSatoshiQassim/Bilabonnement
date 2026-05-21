@@ -42,4 +42,45 @@ public class CarController {
 
         return "returnerede-biler";
     }
+
+
+    @GetMapping("/biler/bmw")
+    public String showBMW(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        return "bmw-biler";
+    }
+
+    @GetMapping("/biler/mercedes")
+    public String showMercedes(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        return "mercedes-biler";
+    }
+
+    @GetMapping("/biler/toyota")
+    public String showToyota(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        return "toyota-biler";
+    }
+
+    @GetMapping("/biler/volkswagen")
+    public String showVolkswagen(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        return "volkswagen-biler";
+    }
 }
