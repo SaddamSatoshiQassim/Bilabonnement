@@ -5,6 +5,26 @@ import java.time.LocalDate;
 
 public class RentalAgreement {
 
+   private int id;
+   private int customerId;
+   private int carId;
+   
+   private LocalDate startDate;
+   private LocalDate endDate;
+   private BigDecimal rentalPrice;
+   Location pickupLocation;
+   Location returnLocation;
+
+    public RentalAgreement(LocalDate startDate, LocalDate endDate) {
+        this(0, 0, 0, startDate, endDate, BigDecimal.ZERO, null, null);
+    }
+
+    public RentalAgreement(int id, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Location pickupLocation, Location returnLocation) {
+        this(id, 0, 0, startDate, endDate, rentalPrice, pickupLocation, returnLocation);
+    }
+
+    public RentalAgreement(int id, int customerId, int carId, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Location pickupLocation, Location returnLocation) {
+
     private int id;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -26,8 +46,10 @@ public class RentalAgreement {
                            Car car,
                            Location pickupLocation,
                            Location returnLocation) {
-
+      
         this.id = id;
+        this.customerId = customerId;
+        this.carId = carId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.rentalPrice = rentalPrice;
@@ -43,6 +65,22 @@ public class RentalAgreement {
 
     public void setId(int id) {
         this.id=id;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
     }
 
     public LocalDate getStartDate() {

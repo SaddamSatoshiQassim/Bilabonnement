@@ -118,6 +118,8 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
 
                 return new RentalAgreement(
                         resultSet.getInt("rental_id"),
+                        resultSet.getInt("customer_id"),
+                        resultSet.getInt("car_id"),
                         resultSet.getDate("start_date").toLocalDate(),
 
                         resultSet.getDate("end_date") != null
@@ -141,11 +143,60 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
     }
 
     @Override
+public RentalAgreement findById(int id){
+      String sql = "SELECT * FROM rental_agreement WHERE rental_id = ?";
+
+      try(Connection connection = DriverManager.getConnection(url, user, password)){
+          PreparedStatement statement = connection.prepareStatement(sql);
+
+          statement.setInt(1,id);
+          ResultSet resultSet = statement.executeQuery();
+
+          if (resultSet.next()){
+
+              Location pickupLocation = new Location(resultSet.getString("pickup_location"));
+              Location returnLocation = new Location(resultSet.getString("return_location"));
+
+              return new RentalAgreement(
+                      resultSet.getInt("rental_id"),
+                      resultSet.getInt("customer_id"),
+                      resultSet.getInt("car_id"),
+                      resultSet.getDate("start_date").toLocalDate(),
+                      resultSet.getDate("end_date") != null
+                              ? resultSet.getDate("end_date").toLocalDate()
+                              : null,
+                      resultSet.getBigDecimal("rental_price"),
+                      pickupLocation,
+                      returnLocation
+              );
+
+          }
+      } catch (SQLException e){
+          System.out.println("fejl: kunne ikke finde Lejeaftalen " + e.getMessage());
+      }
+      return null;
+    }
+    public void save(RentalAgreement rentalAgreement){
+        String sql = "INSERT INTO rental_agreement(customer_id, car_id, start_date, end_date, rental_price, pickup_location, return_location) VALUES (?, ?, ?, ?, ?, ?, ?)";
     public void save(RentalAgreement rentalAgreement) {
 
         String sql =
                 "INSERT INTO rental_agreement(customer_id,car_id,start_date,end_date,rental_price,pickup_location,return_location) VALUES(?,?,?,?,?,?,?)";
 
+            statement.setInt(1, rentalAgreement.getCustomerId());
+            statement.setInt(2, rentalAgreement.getCarId());
+            statement.setDate(3,Date.valueOf(rentalAgreement.getStartDate()));
+
+            if(rentalAgreement.getEndDate() != null) {
+                statement.setDate(4,Date.valueOf(rentalAgreement.getEndDate()));
+            } else {
+                statement.setNull(4,Types.DATE);
+            }
+
+            statement.setBigDecimal(5,rentalAgreement.getRentalPrice());
+            statement.setString(6,rentalAgreement.getPickupLocation().getName());
+            statement.setString(7,rentalAgreement.getReturnLocation().getName());
+=======
         try(Connection connection = DriverManager.getConnection(url,user,password);
             PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -200,12 +251,30 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
 
     @Override
     public void update(RentalAgreement rentalAgreement) {
+        String sql = "UPDATE rental_agreement SET customer_id = ?, car_id = ?, start_date = ?, end_date = ?, rental_price = ?, pickup_location = ?, return_location = ? WHERE rental_id = ?";
+
 
         String sql =
                 "UPDATE rental_agreement SET customer_id=?, car_id=?, start_date=?, end_date=?, rental_price=?, pickup_location=?, return_location=? WHERE rental_id=?";
 
         try(Connection connection = DriverManager.getConnection(url,user,password);
             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+          
+            statement.setInt(1, rentalAgreement.getCustomerId());
+            statement.setInt(2, rentalAgreement.getCarId());
+            statement.setDate(3, Date.valueOf(rentalAgreement.getStartDate()));
+
+            if (rentalAgreement.getEndDate() != null) {
+                statement.setDate(4, Date.valueOf(rentalAgreement.getEndDate()));
+            } else {
+                statement.setNull(4, Types.DATE);
+            }
+
+            statement.setBigDecimal(5, rentalAgreement.getRentalPrice());
+            statement.setString(6, rentalAgreement.getPickupLocation().getName());
+            statement.setString(7, rentalAgreement.getReturnLocation().getName());
+            statement.setInt(8, rentalAgreement.getId());
 
             statement.setInt(
                     1,
@@ -277,5 +346,6 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
         } catch(SQLException e){
             System.out.println("Fejl: " + e.getMessage());
         }
+    }
     }
 }
