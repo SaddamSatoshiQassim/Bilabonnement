@@ -33,7 +33,6 @@ public class RentalAgreementController {
 
     @GetMapping("/aftaler/opret")
     public String createAgreement(Model model) {
-
         model.addAttribute("cars", carService.getAll());
         model.addAttribute("customers", customerService.getAllCustomers());
         model.addAttribute("agreement", new RentalAgreement());

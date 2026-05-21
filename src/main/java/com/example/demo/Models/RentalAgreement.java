@@ -4,25 +4,29 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RentalAgreement {
+
     private int id;
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal rentalPrice;
-    private Car car;
+
     private Customer customer;
+    private Car car;
     private Location pickupLocation;
     private Location returnLocation;
-
-
 
     public RentalAgreement() {
     }
 
-    public RentalAgreement(LocalDate startDate, LocalDate endDate) {
-        this(0, startDate, endDate, BigDecimal.ZERO, null, null,null,null);
-    }
+    public RentalAgreement(int id,
+                           LocalDate startDate,
+                           LocalDate endDate,
+                           BigDecimal rentalPrice,
+                           Customer customer,
+                           Car car,
+                           Location pickupLocation,
+                           Location returnLocation) {
 
-    public RentalAgreement(int id, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Customer customer, Car car, Location pickupLocation, Location returnLocation) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -38,7 +42,7 @@ public class RentalAgreement {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id=id;
     }
 
     public LocalDate getStartDate() {
@@ -46,7 +50,7 @@ public class RentalAgreement {
     }
 
     public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+        this.startDate=startDate;
     }
 
     public LocalDate getEndDate() {
@@ -54,7 +58,7 @@ public class RentalAgreement {
     }
 
     public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+        this.endDate=endDate;
     }
 
     public BigDecimal getRentalPrice() {
@@ -62,15 +66,7 @@ public class RentalAgreement {
     }
 
     public void setRentalPrice(BigDecimal rentalPrice) {
-        this.rentalPrice = rentalPrice;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
+        this.rentalPrice=rentalPrice;
     }
 
     public Customer getCustomer() {
@@ -78,7 +74,15 @@ public class RentalAgreement {
     }
 
     public void setCustomer(Customer customer) {
-        this.customer = customer;
+        this.customer=customer;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car=car;
     }
 
     public Location getPickupLocation() {
@@ -86,7 +90,7 @@ public class RentalAgreement {
     }
 
     public void setPickupLocation(Location pickupLocation) {
-        this.pickupLocation = pickupLocation;
+        this.pickupLocation=pickupLocation;
     }
 
     public Location getReturnLocation() {
@@ -94,12 +98,6 @@ public class RentalAgreement {
     }
 
     public void setReturnLocation(Location returnLocation) {
-        this.returnLocation = returnLocation;
-    }
-
-    public boolean hasValidDates() {
-        return startDate != null
-                && endDate != null
-                && !endDate.isBefore(startDate);
+        this.returnLocation=returnLocation;
     }
 }
