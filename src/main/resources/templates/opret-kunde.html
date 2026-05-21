@@ -1,47 +1,31 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret kunde</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-
 <body>
 
-<div th:replace="~{fragments/sidebar::sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="content">
 
     <h1>Opret kunde</h1>
 
-    <form
-            th:action="@{/kunder/gem}"
-            th:object="${customer}"
-            method="post">
+    <form th:action="@{/kunder/gem}" th:object="${customer}" method="post">
 
-        <input
-                th:field="*{name}"
-                placeholder="Navn">
+        <input type="text" th:field="*{name}" placeholder="Navn" required>
 
-        <input
-                th:field="*{email}"
-                placeholder="Email">
+        <input type="email" th:field="*{email}" placeholder="Email">
 
-        <input
-                th:field="*{phone}"
-                placeholder="Telefon">
+        <input type="text" th:field="*{phone}" placeholder="Telefon">
 
-        <button>
-
-            Gem
-
-        </button>
+        <button type="submit">Gem</button>
 
     </form>
 
 </div>
 
 </body>
-
 </html>

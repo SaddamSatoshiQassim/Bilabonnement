@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Kunder</title>
@@ -7,48 +7,33 @@
 </head>
 <body>
 
-<div th:replace="~{fragments/sidebar::sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="content">
 
     <div class="topbar">
-
         <h1>Kunder</h1>
 
         <a th:href="@{/kunder/opret}">
-            <button>Opret kunde</button>
+            <button type="button">Opret kunde</button>
         </a>
-
     </div>
 
     <table>
-
         <tr>
-
             <th>Navn</th>
             <th>Email</th>
             <th>Telefon</th>
-
         </tr>
 
         <tr th:each="customer : ${customers}">
-
-            <td th:text="${customer.name}">
-            </td>
-
-            <td th:text="${customer.email}">
-            </td>
-
-            <td th:text="${customer.phone}">
-            </td>
-
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.phone}"></td>
         </tr>
-
     </table>
 
 </div>
 
 </body>
-
 </html>
