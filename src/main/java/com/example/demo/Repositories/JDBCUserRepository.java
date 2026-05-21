@@ -15,7 +15,7 @@ public class JDBCUserRepository {
 
     public User findByUsername(String username) {
 
-        String sql = "SELECT * FROM userss WHERE username = ?";
+        String sql = "SELECT * FROM users WHERE username = ?";
 
         try {
             return jdbcTemplate.queryForObject(
@@ -36,7 +36,7 @@ public class JDBCUserRepository {
 
     public void save(User user) {
 
-        String sql = "INSERT INTO userss (username, password) VALUES (?, ?)";
+        String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
 
         jdbcTemplate.update(
                 sql,

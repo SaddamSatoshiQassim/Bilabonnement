@@ -30,7 +30,7 @@ public class DamageReportController {
 
     @GetMapping("/skader/opret")
     public String createForm(Model model) {
-        model.addAttribute("damageReport", new DamageReport(0, null, null));
+        model.addAttribute("damageReport", new DamageReport(0, 0,null, null));
 
         model.addAttribute("cars", carService.getAll());
 

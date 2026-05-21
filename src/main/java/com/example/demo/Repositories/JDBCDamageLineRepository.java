@@ -17,7 +17,6 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
     @Override
     public List<DamageLine> findAll() {
         List<DamageLine> damageLines = new ArrayList<>();
-
         String sql = "SELECT * FROM damage_line";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
@@ -50,7 +49,6 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -72,14 +70,12 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
     @Override
     public List<DamageLine> findByReportId(int reportId) {
         List<DamageLine> damageLines = new ArrayList<>();
-
         String sql = "SELECT * FROM damage_line WHERE report_id = ?";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, reportId);
-
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

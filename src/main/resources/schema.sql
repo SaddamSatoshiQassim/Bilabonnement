@@ -34,6 +34,8 @@ CREATE TABLE rental_agreement (
                                   FOREIGN KEY (car_id) REFERENCES car(car_id)
 );
 
+
+
 CREATE TABLE damage_report (
                                report_id INT AUTO_INCREMENT PRIMARY KEY,
                                car_id INT NOT NULL,
