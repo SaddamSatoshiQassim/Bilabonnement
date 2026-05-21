@@ -7,6 +7,7 @@ public class RentalAgreement {
    private int id;
    private int customerId;
    private int carId;
+   
    private LocalDate startDate;
    private LocalDate endDate;
    private BigDecimal rentalPrice;
