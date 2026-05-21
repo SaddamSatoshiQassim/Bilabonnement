@@ -1,6 +1,8 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.DamageReport;
+import com.example.demo.Services.CarService;
+import com.example.demo.Services.CustomerService;
 import com.example.demo.Services.DamageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class DamageReportController {
 
     private final DamageService service;
+    private final CarService carService;
 
-    public DamageReportController(DamageService service) {
+
+    public DamageReportController(DamageService service, CarService carService) {
+        this.carService = carService;
         this.service = service;
     }
 
@@ -25,7 +30,11 @@ public class DamageReportController {
 
     @GetMapping("/skader/opret")
     public String createForm(Model model) {
-        model.addAttribute("damageReport", new DamageReport(0, null, null));
+        model.addAttribute("damageReport", new DamageReport(0, 0,null, null));
+
+        model.addAttribute("cars", carService.getAll());
+
+
         return "opret-skade";
     }
 

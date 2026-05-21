@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <body>
 
 <div th:fragment="sidebar">
@@ -8,57 +9,36 @@
 
         <h2>BilAdmin</h2>
 
-        <a th:href="@{/}">Dashboard</a>
-
-        <div class="dropdown">
-            <a th:href="@{/aftaler}">Aftaler</a>
-
-            <div class="dropdown-content">
-                <a th:href="@{/aftaler/opret}">
-                    Opret aftale
-                </a>
-            </div>
-
-        </div>
-
-        <div class="dropdown">
-
-            <a th:href="@{/skader}">
-                Skader
-            </a>
-
-            <div class="dropdown-content">
-
-                <a th:href="@{/skader/opret}">
-                    Opret skade
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="dropdown">
-
-            <a th:href="@{/kunder}">
-                Kunder
-            </a>
-
-            <div class="dropdown-content">
-
-                <a th:href="@{/kunder/opret}">
-                    Opret kunde
-                </a>
-
-            </div>
-
-        </div>
-
-        <a th:href="@{/biler}">
-            Biler
+        <a href="/">
+            Dashboard
         </a>
 
-        <a th:href="@{/okonomi}">
-            Økonomi
+        <a href="/aftaler">
+            Aftaler
+        </a>
+
+        <a href="/aftaler/opret">
+            Opret Aftale
+        </a>
+
+        <a href="/skader">
+            Skader
+        </a>
+
+        <a href="/skader/opret">
+            Opret Skade
+        </a>
+
+        <a href="/kunder">
+            Kunder
+        </a>
+
+        <a href="/kunder/opret">
+            Opret Kunde
+        </a>
+
+        <a href="/biler">
+            Biler
         </a>
 
     </div>
@@ -66,4 +46,5 @@
 </div>
 
 </body>
+
 </html>

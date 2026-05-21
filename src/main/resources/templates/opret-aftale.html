@@ -1,48 +1,74 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Opret aftale</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <body>
-
-<div th:replace="~{fragments/sidebar::sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar::sidebar}"></div>
 
 <div class="content">
+    <div class="topbar">
+        <h1>Opret bil reservation</h1>
+        <a th:href="@{/aftaler}"><button type="button">← Tilbage</button></a>
+    </div>
 
-    <h1>Opret aftale</h1>
+    <form th:action="@{/aftaler/gem}" method="post">
 
-    <form
-            th:action="@{/aftaler/gem}"
-            th:object="${agreement}"
-            method="post">
+        <label>Kunde navn</label>
+        <input type="text"
+               name="customerName"
+               placeholder="Indtast navn">
 
-        <input
-                type="date"
-                th:field="*{startDate}">
+        <label>Kunde email</label>
+        <input type="email"
+               name="customerEmail"
+               placeholder="Indtast email">
 
-        <input
-                type="date"
-                th:field="*{endDate}">
+        <label>Start dato</label>
+        <input type="date"
+               name="startDate">
 
-        <input
-                th:field="*{rentalPrice}"
-                placeholder="Pris">
+        <label>Slut dato</label>
+        <input type="date"
+               name="endDate">
 
-        <button>
+        <label>Vælg bil</label>
 
-            Gem
+        <select name="carId">
 
-        </button>
+            <option
+                    th:each="car : ${cars}"
+                    th:value="${car.id}"
+                    th:text="${car.brand + ' ' + car.model}">
+            </option>
+
+        </select>
+
+        <label>Pris</label>
+
+        <input type="text"
+               value="Auto genereres"
+               disabled>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+
+            <button type="submit">
+                Gem
+            </button>
+
+            <a th:href="@{/aftaler}">
+                <button type="button">
+                    Cancel
+                </button>
+            </a>
+
+        </div>
 
     </form>
-
 </div>
-
 </body>
 
 </html>

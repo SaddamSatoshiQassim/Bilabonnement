@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="content">
+
+    <div class="card">
+
+        <h1>Du skal logge ind først</h1>
+
+        <p>
+            Hvis du ikke har en adgangskode,
+            skal du oprette en bruger først.
+        </p>
+
+        <form action="/login" method="post">
+
+            <input type="text"
+                   name="username"
+                   placeholder="Brugernavn"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Adgangskode"
+                   required>
+
+            <button type="submit">
+                Log ind
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="/opret-bruger">
+            Opret bruger
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+

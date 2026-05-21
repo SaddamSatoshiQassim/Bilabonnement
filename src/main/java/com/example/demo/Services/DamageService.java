@@ -2,43 +2,46 @@ package com.example.demo.Services;
 
 import com.example.demo.Models.DamageLine;
 import com.example.demo.Models.DamageReport;
+import com.example.demo.Repositories.DamageReportRepository;
+import com.example.demo.Repositories.JDBCDamageReportRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class DamageService {
 
-    private final List<DamageReport> damageReports = new ArrayList<>();
+    private final DamageReportRepository repository;
 
-    public double calculateTotalDamagePrice(List<DamageLine> damageLines) {
+
+    public DamageService(DamageReportRepository repository) {
+        this.repository = repository;
+    }
+
+    public BigDecimal calculateTotalDamagePrice(List<DamageLine> damageLines) {
         return damageLines.stream()
-                .mapToDouble(DamageLine::getPrice)
-                .sum();
+                .map(DamageLine::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public List<DamageReport> getAllDamageReports() {
-        return new ArrayList<>(damageReports);
+        return repository.findAll();
     }
 
     public DamageReport getDamageReportById(int id) {
-        return damageReports.stream()
-                .filter(report -> report.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return repository.findById(id);
     }
 
     public void addDamageReport(DamageReport damageReport) {
-        damageReports.removeIf(report -> report.getId() == damageReport.getId());
-        damageReports.add(damageReport);
+        repository.save(damageReport);
     }
 
     public void updateDamageReport(DamageReport damageReport) {
-        addDamageReport(damageReport);
+        repository.update(damageReport);
     }
 
     public void deleteDamageReportById(int id) {
-        damageReports.removeIf(report -> report.getId() == id);
+        repository.deleteById(id);
     }
 }

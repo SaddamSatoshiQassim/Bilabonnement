@@ -1,36 +1,47 @@
 package com.example.demo.Repositories;
 
 import com.example.demo.Models.User;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+@Repository
+public class JDBCUserRepository {
 
-public class JDBCUserRepository implements UserRepository {
+    private final JdbcTemplate jdbcTemplate;
 
-    String url = System.getenv("DB_URL");
-    String user = System.getenv("DB_USER");
-    String password = System.getenv("DB_PASSWORD");
+    public JDBCUserRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    @Override
     public User findByUsername(String username) {
+
         String sql = "SELECT * FROM users WHERE username = ?";
 
-        try(Connection connection = DriverManager.getConnection(url, user, password)) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try {
+            return jdbcTemplate.queryForObject(
+                    sql,
+                    (resultSet, rowNum) ->
+                            new User(
+                                    resultSet.getInt("user_id"),
+                                    resultSet.getString("username"),
+                                    resultSet.getString("password")
+                            ),
+                    username
+            );
 
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-
-            if(resultSet.next()) {
-                return new User(
-                        resultSet.getInt("user_id"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password")
-                );
-            }
-
-        } catch(SQLException e) {
-            System.out.println("der er fejl i findByUsername: " + e.getMessage());
+        } catch (Exception e) {
+            return null;
         }
-        return null;
+    }
+
+    public void save(User user) {
+
+        String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+
+        jdbcTemplate.update(
+                sql,
+                user.getUsername(),
+                user.getPassword()
+        );
     }
 }

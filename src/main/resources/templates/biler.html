@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Biler</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <body>
@@ -16,39 +18,145 @@
 
     <h1>Biler</h1>
 
-    <input
-            type="text"
-            placeholder="Søg biler...">
+    <div class="brand-buttons">
 
-    <table>
+        <a href="/biler/bmw" class="brand-box">
+            BMW
+        </a>
 
-        <tr th:each="car : ${cars}">
+        <a href="/biler/mercedes" class="brand-box">
+            Mercedes
+        </a>
 
-            <td th:text="${car.vin}">
-            </td>
+        <a href="/biler/toyota" class="brand-box">
+            Toyota
+        </a>
 
-            <td th:text="${car.brand}">
-            </td>
+        <a href="/biler/volkswagen" class="brand-box">
+            Volkswagen
+        </a>
 
-            <td th:text="${car.model}">
-            </td>
+    </div>
 
-            <td th:text="${car.status}">
-            </td>
+    <div class="car-grid">
 
-        </tr>
+        <details class="car-card">
+            <summary>
+                <img src="/Images/bmw-x5.jpg" class="car-img">
 
-    </table>
+                <h3>BMW X5</h3>
 
-    <div class="carousel">
+                <p class="status-line">
+                    <span class="status-badge ledig">
+                        Ledig
+                    </span>
+                </p>
+            </summary>
 
-        <button class="left">←</button>
+            <div class="car-info">
 
-        <img src="/img/car1.jpg" class="car-img">
-        <img src="/img/car2.jpg" class="car-img">
-        <img src="/img/car3.jpg" class="car-img">
+                <p><b>Bil ID:</b> 1</p>
 
-        <button class="right">→</button>
+                <p><b>VIN:</b> VIN0001</p>
+
+                <p><b>Mærke:</b> BMW</p>
+
+                <p><b>Model:</b> X5</p>
+
+                <p><b>Status:</b> Ledig</p>
+
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+
+                <img src="/Images/mercedes-e200.jpg" class="car-img">
+
+                <h3>Mercedes E200</h3>
+
+                <p class="status-line">
+                    <span class="status-badge ledig">
+                        Ledig
+                    </span>
+                </p>
+
+            </summary>
+
+            <div class="car-info">
+
+                <p><b>Bil ID:</b> 2</p>
+
+                <p><b>VIN:</b> VIN0002</p>
+
+                <p><b>Mærke:</b> Mercedes</p>
+
+                <p><b>Model:</b> E200</p>
+
+                <p><b>Status:</b> Ledig</p>
+
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+
+                <img src="/Images/toyota-yaris.jpg" class="car-img">
+
+                <h3>Toyota Yaris</h3>
+
+                <p class="status-line">
+                    <span class="status-badge ledig">
+                        Ledig
+                    </span>
+                </p>
+
+            </summary>
+
+            <div class="car-info">
+
+                <p><b>Bil ID:</b> 3</p>
+
+                <p><b>VIN:</b> VIN0003</p>
+
+                <p><b>Mærke:</b> Toyota</p>
+
+                <p><b>Model:</b> Yaris</p>
+
+                <p><b>Status:</b> Ledig</p>
+
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+
+                <img src="/Images/volkswagen-golf.jpg" class="car-img">
+
+                <h3>Volkswagen Golf</h3>
+
+                <p class="status-line">
+                    <span class="status-badge ledig">
+                        Ledig
+                    </span>
+                </p>
+
+            </summary>
+
+            <div class="car-info">
+
+                <p><b>Bil ID:</b> 4</p>
+
+                <p><b>VIN:</b> VIN0004</p>
+
+                <p><b>Mærke:</b> Volkswagen</p>
+
+                <p><b>Model:</b> Golf</p>
+
+                <p><b>Status:</b> Ledig</p>
+
+            </div>
+        </details>
 
     </div>
 
