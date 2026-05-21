@@ -16,8 +16,7 @@ public class DamageLine {
         this.price = price;
     }
 
-    public DamageLine(int reportId, String description, BigDecimal price) {
-        this.reportId = reportId;
+    public void updateDamage(String description, BigDecimal price) {
         this.description = description;
         this.price = price;
     }

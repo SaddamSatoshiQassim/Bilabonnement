@@ -16,12 +16,6 @@ public class DamageReport {
         this.description = description;
     }
 
-    public DamageReport(int carId, LocalDate reportDate, String description) {
-        this.carId = carId;
-        this.reportDate = reportDate;
-        this.description = description;
-    }
-
     public int getId() {
         return id;
     }
