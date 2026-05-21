@@ -4,24 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RentalAgreement {
-   private int id;
-   private int customerId;
-   private int carId;
-   private LocalDate startDate;
-   private LocalDate endDate;
-   private BigDecimal rentalPrice;
-   Location pickupLocation;
-   Location returnLocation;
-
-    public RentalAgreement(LocalDate startDate, LocalDate endDate) {
-        this(0, 0, 0, startDate, endDate, BigDecimal.ZERO, null, null);
-    }
-
-    public RentalAgreement(int id, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Location pickupLocation, Location returnLocation) {
-        this(id, 0, 0, startDate, endDate, rentalPrice, pickupLocation, returnLocation);
-    }
-
-    public RentalAgreement(int id, int customerId, int carId, LocalDate startDate, LocalDate endDate, BigDecimal rentalPrice, Location pickupLocation, Location returnLocation) {
 
     private int id;
     private int customerId;
@@ -32,6 +14,7 @@ public class RentalAgreement {
     private Location pickupLocation;
     private Location returnLocation;
 
+    // Default constructor
     public RentalAgreement() {
         this.id = 0;
         this.customerId = 0;
@@ -43,6 +26,24 @@ public class RentalAgreement {
         this.returnLocation = null;
     }
 
+    // Constructor med kun datoer
+    public RentalAgreement(LocalDate startDate, LocalDate endDate) {
+        this(0, 0, 0, startDate, endDate, BigDecimal.ZERO, null, null);
+    }
+
+    // Constructor uden customerId og carId
+    public RentalAgreement(
+            int id,
+            LocalDate startDate,
+            LocalDate endDate,
+            BigDecimal rentalPrice,
+            Location pickupLocation,
+            Location returnLocation) {
+
+        this(id, 0, 0, startDate, endDate, rentalPrice, pickupLocation, returnLocation);
+    }
+
+    // Full constructor
     public RentalAgreement(
             int id,
             int customerId,
@@ -63,6 +64,7 @@ public class RentalAgreement {
         this.returnLocation = returnLocation;
     }
 
+    // Getters
     public int getId() {
         return id;
     }
@@ -71,24 +73,6 @@ public class RentalAgreement {
         return customerId;
     }
 
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public int getCarId() {
-        return carId;
-    }
-
-    public void setCarId(int carId) {
-        this.carId = carId;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
     public int getCarId() {
         return carId;
     }
@@ -113,6 +97,7 @@ public class RentalAgreement {
         return returnLocation;
     }
 
+    // Setters
     public void setId(int id) {
         this.id = id;
     }
@@ -145,6 +130,7 @@ public class RentalAgreement {
         this.returnLocation = returnLocation;
     }
 
+    // Validering af datoer
     public boolean hasValidDates() {
         return startDate != null
                 && endDate != null
