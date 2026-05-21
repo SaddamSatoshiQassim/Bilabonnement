@@ -1,37 +1,47 @@
-
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>Skader</title>
-<link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>Skader</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
+
 <body>
 
-<div th:replace="~{fragments/sidebar :: sidebar}">
+<div th:replace="~{fragments/sidebar::sidebar}">
 </div>
 
 <div class="content">
-<div class="topbar">
-<h1>Skader</h1>
-<a href="/skader/opret"><button>Opret Skade</button></a>
+
+    <h1>Skader</h1>
+
+    <a th:href="@{/skader/opret}">
+        <button>
+            Opret skade
+        </button>
+    </a>
+
+    <table>
+        <tr>
+            <th>Dato</th>
+            <th>Beskrivelse</th>
+            <th>Pris</th>
+        </tr>
+
+        <tr th:each="damage : ${damageReports}">
+
+            <td th:text="${damage.reportDate}"></td>
+
+            <td th:text="${damage.description}"></td>
+
+            <td th:text="${damage.totalPrice}"></td>
+
+        </tr>
+
+    </table>
+
 </div>
 
-<table>
-<tr>
-<th>Navn</th>
-<th>Email</th>
-<th>Nummerplade</th>
-<th>Pris</th>
-</tr>
-
-<tr>
-<td>Oliver</td>
-<td>oliver@mail.dk</td>
-<td>AB12345</td>
-<td>2500 kr</td>
-</tr>
-</table>
-</div>
 </body>
+
 </html>

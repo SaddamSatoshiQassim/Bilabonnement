@@ -1,14 +1,16 @@
+
 package com.example.demo.Services;
 
 import com.example.demo.Models.User;
 import com.example.demo.Repositories.JDBCUserRepository;
-import com.example.demo.Repositories.UserRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final JDBCUserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(JDBCUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -21,5 +23,12 @@ public class UserService {
         }
 
         return null;
+    }
+
+    public void createUser(String username, String password) {
+
+        User user = new User(0, username, password);
+
+        userRepository.save(user);
     }
 }

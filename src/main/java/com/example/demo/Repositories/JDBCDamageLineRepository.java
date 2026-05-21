@@ -16,23 +16,19 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
 
     @Override
     public List<DamageLine> findAll() {
-
         List<DamageLine> damageLines = new ArrayList<>();
-
         String sql = "SELECT * FROM damage_line";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            ResultSet resultSet = statement.executeQuery();
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-
                 DamageLine damageLine = new DamageLine(
                         resultSet.getInt("damage_line_id"),
+                        resultSet.getInt("report_id"),
                         resultSet.getString("description"),
-                        resultSet.getDouble("price")
+                        resultSet.getBigDecimal("price")
                 );
 
                 damageLines.add(damageLine);
@@ -47,23 +43,20 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
 
     @Override
     public DamageLine findById(int id) {
-
         String sql = "SELECT * FROM damage_line WHERE damage_line_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-
                 return new DamageLine(
                         resultSet.getInt("damage_line_id"),
+                        resultSet.getInt("report_id"),
                         resultSet.getString("description"),
-                        resultSet.getDouble("price")
+                        resultSet.getBigDecimal("price")
                 );
             }
 
@@ -75,16 +68,44 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
     }
 
     @Override
+    public List<DamageLine> findByReportId(int reportId) {
+        List<DamageLine> damageLines = new ArrayList<>();
+        String sql = "SELECT * FROM damage_line WHERE report_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, reportId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                DamageLine damageLine = new DamageLine(
+                        resultSet.getInt("damage_line_id"),
+                        resultSet.getInt("report_id"),
+                        resultSet.getString("description"),
+                        resultSet.getBigDecimal("price")
+                );
+
+                damageLines.add(damageLine);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fejl i findByReportId: " + e.getMessage());
+        }
+
+        return damageLines;
+    }
+
+    @Override
     public void save(DamageLine damageLine) {
+        String sql = "INSERT INTO damage_line (report_id, description, price) VALUES (?, ?, ?)";
 
-        String sql = "INSERT INTO damage_line(description, price) VALUES (?, ?)";
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setString(1, damageLine.getDescription());
-            statement.setDouble(2, damageLine.getPrice());
+            statement.setInt(1, damageLine.getReportId());
+            statement.setString(2, damageLine.getDescription());
+            statement.setBigDecimal(3, damageLine.getPrice());
 
             statement.executeUpdate();
 
@@ -95,16 +116,15 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
 
     @Override
     public void update(DamageLine damageLine) {
+        String sql = "UPDATE damage_line SET report_id = ?, description = ?, price = ? WHERE damage_line_id = ?";
 
-        String sql = "UPDATE damage_line SET description = ?, price = ? WHERE damage_line_id = ?";
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setString(1, damageLine.getDescription());
-            statement.setDouble(2, damageLine.getPrice());
-            statement.setInt(3, damageLine.getId());
+            statement.setInt(1, damageLine.getReportId());
+            statement.setString(2, damageLine.getDescription());
+            statement.setBigDecimal(3, damageLine.getPrice());
+            statement.setInt(4, damageLine.getId());
 
             statement.executeUpdate();
 
@@ -115,15 +135,12 @@ public class JDBCDamageLineRepository implements DamageLineRepository {
 
     @Override
     public void deleteById(int id) {
-
         String sql = "DELETE FROM damage_line WHERE damage_line_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-
             statement.executeUpdate();
 
         } catch (SQLException e) {

@@ -1,33 +1,91 @@
-
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Aftaler</title>
-<link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>Aftaler</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
+
 <body>
 
-<div th:replace="~{fragments/sidebar :: sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar::sidebar}"></div>
 
 <div class="content">
-<div class="topbar">
-<h1>Reservationer</h1>
-<a href="/aftaler/opret"><button>Opret Aftale</button></a>
+
+    <div class="topbar">
+        <h1>Bil Reservationer</h1>
+
+        <a th:href="@{/aftaler/opret}">
+            <button>Opret Aftale</button>
+        </a>
+    </div>
+
+    <table>
+
+        <tr>
+            <th>Kunde Navn</th>
+            <th>Kunde Email</th>
+            <th>Nummerplade</th>
+            <th>Start dato</th>
+            <th>Slut dato</th>
+            <th>Handling / Pris</th>
+        </tr>
+
+        <th:block th:each="agreement, stat : ${agreements}">
+
+            <tr>
+                <td th:text="${agreement.customerName}"></td>
+                <td th:text="${agreement.customerEmail}"></td>
+                <td th:text="${agreement.carPlate}"></td>
+                <td th:text="${agreement.startDate}"></td>
+                <td th:text="${agreement.endDate}"></td>
+
+                <td>
+
+                    <button th:if="${!agreement.settled}"
+                            th:onclick="'document.getElementById(\'calc-' + ${stat.index} + '\').style.display=\'table-row\''">
+                        Beregn overkørsel
+                    </button>
+
+                    <span th:if="${agreement.settled}"
+                          th:text="${agreement.totalPrice + ' kr.'}">
+                    </span>
+
+                </td>
+            </tr>
+
+            <tr th:id="'calc-' + ${stat.index}" style="display:none;">
+                <td colspan="6">
+
+                    <form th:action="@{/aftaler/afregn/{id}(id=${agreement.id})}"
+                          method="post">
+
+                        <input type="number"
+                               name="paidKilometers"
+                               placeholder="Kilometer betalt for">
+
+                        <input type="number"
+                               name="drivenKilometers"
+                               placeholder="Kilometer kørt i alt">
+
+                        <button type="submit">Afregn Nu</button>
+
+                        <button type="button"
+                                th:onclick="'document.getElementById(\'calc-' + ${stat.index} + '\').style.display=\'none\''">
+                            Annuller
+                        </button>
+
+                    </form>
+
+                </td>
+            </tr>
+
+        </th:block>
+
+    </table>
+
 </div>
 
-<table>
-<tr>
-<th>Navn</th>
-<th>Email</th>
-<th>Bil</th>
-<th>Start</th>
-<th>Slut</th>
-<th>overkørsel</th>
-</tr>
-
-</table>
-</div>
 </body>
 </html>

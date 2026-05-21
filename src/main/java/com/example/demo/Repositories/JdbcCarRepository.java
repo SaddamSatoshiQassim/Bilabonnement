@@ -30,7 +30,7 @@ public class JdbcCarRepository implements CarRepository {
                         resultSet.getString("vin"),
                         resultSet.getString("brand"),
                         resultSet.getString("model"),
-                        CarStatus.valueOf(resultSet.getString("status")),
+                        CarStatus.valueOf(resultSet.getString("status").toUpperCase()),
                         resultSet.getBigDecimal("purchase_price")
                 );
 
@@ -59,7 +59,7 @@ public class JdbcCarRepository implements CarRepository {
                         resultSet.getString("vin"),
                         resultSet.getString("brand"),
                         resultSet.getString("model"),
-                        CarStatus.valueOf(resultSet.getString("status")),
+                        CarStatus.valueOf(resultSet.getString("status").toUpperCase()),
                         resultSet.getBigDecimal("purchase_price")
                 );
             }
