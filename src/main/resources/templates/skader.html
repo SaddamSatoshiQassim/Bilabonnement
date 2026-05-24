@@ -19,23 +19,19 @@
     </a>
 
     <table>
-        <thead>
         <tr>
             <th>Dato</th>
             <th>Bil ID</th>
             <th>Beskrivelse</th>
             <th>Pris</th>
         </tr>
-        </thead>
 
-        <tbody>
         <tr th:each="damage : ${damageReports}">
             <td th:text="${damage.reportDate}"></td>
             <td th:text="${damage.carId}"></td>
             <td th:text="${damage.description}"></td>
             <td th:text="${damage.totalPrice + ' kr'}"></td>
         </tr>
-        </tbody>
     </table>
 
 </div>
