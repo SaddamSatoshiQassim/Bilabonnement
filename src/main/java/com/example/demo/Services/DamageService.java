@@ -1,9 +1,12 @@
 package com.example.demo.Services;
 
+import com.example.demo.Models.CarStatus;
 import com.example.demo.Models.DamageLine;
 import com.example.demo.Models.DamageReport;
+import com.example.demo.Repositories.CarRepository;
 import com.example.demo.Repositories.DamageLineRepository;
 import com.example.demo.Repositories.DamageReportRepository;
+import com.example.demo.Repositories.JdbcCarRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,11 +17,14 @@ public class DamageService {
 
     private final DamageReportRepository repository;
     private final DamageLineRepository damageLineRepository;
+    private final CarRepository carRepository;
 
     public DamageService(DamageReportRepository repository,
-                         DamageLineRepository damageLineRepository) {
+                         DamageLineRepository damageLineRepository,
+                         CarRepository carRepository) {
         this.repository = repository;
         this.damageLineRepository = damageLineRepository;
+        this.carRepository = carRepository;
     }
 
     public BigDecimal calculateTotalDamagePrice(List<DamageLine> damageLines) {
