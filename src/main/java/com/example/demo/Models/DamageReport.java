@@ -1,13 +1,16 @@
 package com.example.demo.Models;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 public class DamageReport {
     private int id;
     private int carId;
     private LocalDate reportDate;
     private String description;
-    private List<DamageLine> damageLines;
+    private List<DamageLine> damageLines = new ArrayList<>();
+    private BigDecimal totalPrice;
 
 
     public DamageReport(int id,int carId ,LocalDate reportDate, String description) {
@@ -58,5 +61,13 @@ public class DamageReport {
     }
     public void addDamageLine(DamageLine damageLine){
         this.damageLines.add(damageLine);
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

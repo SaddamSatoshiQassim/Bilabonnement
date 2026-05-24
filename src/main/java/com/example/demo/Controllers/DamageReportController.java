@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class DamageReportController {
@@ -30,17 +33,20 @@ public class DamageReportController {
 
     @GetMapping("/skader/opret")
     public String createForm(Model model) {
-        model.addAttribute("damageReport", new DamageReport(0, null, null));
+
+        model.addAttribute("damageReport",
+                new DamageReport(0, 0, null, null));
 
         model.addAttribute("cars", carService.getAll());
 
-
         return "opret-skade";
     }
-
     @PostMapping("/skader/gem")
-    public String saveDamageReport(@ModelAttribute DamageReport damageReport) {
-        service.addDamageReport(damageReport);
+    public String saveDamageReport(@ModelAttribute DamageReport damageReport,
+                                   @RequestParam(required = false) List<String> damage) {
+
+        service.addDamageReport(damageReport, damage);
+
         return "redirect:/skader";
     }
 }
