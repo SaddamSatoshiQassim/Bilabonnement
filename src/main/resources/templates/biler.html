@@ -11,150 +11,239 @@
 
 <body>
 
-<div th:replace="~{fragments/sidebar::sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="content">
 
     <h1>Biler</h1>
 
-    <div class="brand-buttons">
-
-        <a href="/biler/bmw" class="brand-box">
-            BMW
-        </a>
-
-        <a href="/biler/mercedes" class="brand-box">
-            Mercedes
-        </a>
-
-        <a href="/biler/toyota" class="brand-box">
-            Toyota
-        </a>
-
-        <a href="/biler/volkswagen" class="brand-box">
-            Volkswagen
-        </a>
-
-    </div>
-
     <div class="car-grid">
 
         <details class="car-card">
             <summary>
-                <img src="/Images/bmw-x5.jpg" class="car-img">
-
-                <h3>BMW X5</h3>
-
-                <p class="status-line">
-                    <span class="status-badge ledig">
-                        Ledig
-                    </span>
-                </p>
+                <img src="/Images/bmw-320i.jpg" class="car-img" alt="BMW 320i">
+                <h3>BMW 320i</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
             </summary>
 
             <div class="car-info">
-
                 <p><b>Bil ID:</b> 1</p>
-
                 <p><b>VIN:</b> VIN0001</p>
-
-                <p><b>Mærke:</b> BMW</p>
-
-                <p><b>Model:</b> X5</p>
-
-                <p><b>Status:</b> Ledig</p>
-
+                <p><b>Pris:</b> 699 kr/dag</p>
+                <p><b>Tophastighed:</b> 235 km/t</p>
+                <p><b>Kørt:</b> 45.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Sæder:</b> 5</p>
             </div>
         </details>
 
         <details class="car-card">
             <summary>
-
-                <img src="/Images/mercedes-e200.jpg" class="car-img">
-
-                <h3>Mercedes E200</h3>
-
-                <p class="status-line">
-                    <span class="status-badge ledig">
-                        Ledig
-                    </span>
-                </p>
-
+                <img src="/Images/bmw-520d.jpg" class="car-img" alt="BMW 520d">
+                <h3>BMW 520d</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
             </summary>
 
             <div class="car-info">
-
                 <p><b>Bil ID:</b> 2</p>
-
                 <p><b>VIN:</b> VIN0002</p>
-
-                <p><b>Mærke:</b> Mercedes</p>
-
-                <p><b>Model:</b> E200</p>
-
-                <p><b>Status:</b> Ledig</p>
-
+                <p><b>Pris:</b> 849 kr/dag</p>
+                <p><b>Tophastighed:</b> 240 km/t</p>
+                <p><b>Kørt:</b> 62.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Sæder:</b> 5</p>
             </div>
         </details>
 
         <details class="car-card">
             <summary>
-
-                <img src="/Images/toyota-yaris.jpg" class="car-img">
-
-                <h3>Toyota Yaris</h3>
-
-                <p class="status-line">
-                    <span class="status-badge ledig">
-                        Ledig
-                    </span>
-                </p>
-
+                <img src="/Images/bmw-x5.jpg" class="car-img" alt="BMW X5">
+                <h3>BMW X5</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
             </summary>
 
             <div class="car-info">
-
                 <p><b>Bil ID:</b> 3</p>
-
                 <p><b>VIN:</b> VIN0003</p>
-
-                <p><b>Mærke:</b> Toyota</p>
-
-                <p><b>Model:</b> Yaris</p>
-
-                <p><b>Status:</b> Ledig</p>
-
+                <p><b>Pris:</b> 1299 kr/dag</p>
+                <p><b>Tophastighed:</b> 250 km/t</p>
+                <p><b>Kørt:</b> 58.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Sæder:</b> 5</p>
             </div>
         </details>
 
         <details class="car-card">
             <summary>
-
-                <img src="/Images/volkswagen-golf.jpg" class="car-img">
-
-                <h3>Volkswagen Golf</h3>
-
-                <p class="status-line">
-                    <span class="status-badge ledig">
-                        Ledig
-                    </span>
-                </p>
-
+                <img src="/Images/mercedes-e200.jpg" class="car-img" alt="Mercedes E200">
+                <h3>Mercedes E200</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
             </summary>
 
             <div class="car-info">
-
                 <p><b>Bil ID:</b> 4</p>
-
                 <p><b>VIN:</b> VIN0004</p>
+                <p><b>Pris:</b> 899 kr/dag</p>
+                <p><b>Tophastighed:</b> 240 km/t</p>
+                <p><b>Kørt:</b> 39.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
 
-                <p><b>Mærke:</b> Volkswagen</p>
+        <details class="car-card">
+            <summary>
+                <img src="/Images/mercedes-e220.jpg" class="car-img" alt="Mercedes E220">
+                <h3>Mercedes E220</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
-                <p><b>Model:</b> Golf</p>
+            <div class="car-info">
+                <p><b>Bil ID:</b> 5</p>
+                <p><b>VIN:</b> VIN0005</p>
+                <p><b>Pris:</b> 949 kr/dag</p>
+                <p><b>Tophastighed:</b> 245 km/t</p>
+                <p><b>Kørt:</b> 52.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
 
-                <p><b>Status:</b> Ledig</p>
+        <details class="car-card">
+            <summary>
+                <img src="/Images/mercedes-glc.jpg" class="car-img" alt="Mercedes GLC">
+                <h3>Mercedes GLC</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
 
+            <div class="car-info">
+                <p><b>Bil ID:</b> 6</p>
+                <p><b>VIN:</b> VIN0006</p>
+                <p><b>Pris:</b> 1199 kr/dag</p>
+                <p><b>Tophastighed:</b> 230 km/t</p>
+                <p><b>Kørt:</b> 47.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+                <img src="/Images/toyota-auris.jpg" class="car-img" alt="Toyota Auris">
+                <h3>Toyota Auris</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 7</p>
+                <p><b>VIN:</b> VIN0007</p>
+                <p><b>Pris:</b> 449 kr/dag</p>
+                <p><b>Tophastighed:</b> 190 km/t</p>
+                <p><b>Kørt:</b> 76.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Hybrid</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+                <img src="/Images/toyota-corolla.jpg" class="car-img" alt="Toyota Corolla">
+                <h3>Toyota Corolla</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 8</p>
+                <p><b>VIN:</b> VIN0008</p>
+                <p><b>Pris:</b> 499 kr/dag</p>
+                <p><b>Tophastighed:</b> 195 km/t</p>
+                <p><b>Kørt:</b> 41.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Hybrid</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+                <img src="/Images/toyota-yaris.jpg" class="car-img" alt="Toyota Yaris">
+                <h3>Toyota Yaris</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 9</p>
+                <p><b>VIN:</b> VIN0009</p>
+                <p><b>Pris:</b> 399 kr/dag</p>
+                <p><b>Tophastighed:</b> 175 km/t</p>
+                <p><b>Kørt:</b> 35.000 km</p>
+                <p><b>Gear:</b> Manuel</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+                <img src="/Images/volkswagen-golf.jpg" class="car-img" alt="Volkswagen Golf">
+                <h3>Volkswagen Golf</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 10</p>
+                <p><b>VIN:</b> VIN0010</p>
+                <p><b>Pris:</b> 549 kr/dag</p>
+                <p><b>Tophastighed:</b> 210 km/t</p>
+                <p><b>Kørt:</b> 68.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+                <img src="/Images/volkswagen-pasat.jpg" class="car-img" alt="Volkswagen Passat">
+                <h3>Volkswagen Passat</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 11</p>
+                <p><b>VIN:</b> VIN0011</p>
+                <p><b>Pris:</b> 649 kr/dag</p>
+                <p><b>Tophastighed:</b> 220 km/t</p>
+                <p><b>Kørt:</b> 72.000 km</p>
+                <p><b>Gear:</b> Automatisk</p>
+                <p><b>Brændstof:</b> Diesel</p>
+                <p><b>Sæder:</b> 5</p>
+            </div>
+        </details>
+
+        <details class="car-card">
+            <summary>
+                <img src="/Images/volkswagen-polo.jpg" class="car-img" alt="Volkswagen Polo">
+                <h3>Volkswagen Polo</h3>
+                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+            </summary>
+
+            <div class="car-info">
+                <p><b>Bil ID:</b> 12</p>
+                <p><b>VIN:</b> VIN0012</p>
+                <p><b>Pris:</b> 399 kr/dag</p>
+                <p><b>Tophastighed:</b> 185 km/t</p>
+                <p><b>Kørt:</b> 54.000 km</p>
+                <p><b>Gear:</b> Manuel</p>
+                <p><b>Brændstof:</b> Benzin</p>
+                <p><b>Sæder:</b> 5</p>
             </div>
         </details>
 
