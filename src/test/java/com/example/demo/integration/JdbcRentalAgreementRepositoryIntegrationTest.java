@@ -48,7 +48,6 @@ class JdbcRentalAgreementRepositoryIntegrationTest {
                     CREATE TABLE customer (
                         customer_id INT AUTO_INCREMENT PRIMARY KEY,
                         name VARCHAR(100) NOT NULL,
-                            OT NULL,
                         email VARCHAR(100),
                         phone VARCHAR(30)
                     )

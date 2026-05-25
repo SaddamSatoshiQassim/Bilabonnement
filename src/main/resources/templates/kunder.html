@@ -21,12 +21,14 @@
 
     <table>
         <tr>
+            <th>Kunde ID</th>
             <th>Navn</th>
             <th>Email</th>
             <th>Telefon</th>
         </tr>
 
         <tr th:each="customer : ${customers}">
+            <td> th:text="${customer.id}"></td>
             <td th:text="${customer.name}"></td>
             <td th:text="${customer.email}"></td>
             <td th:text="${customer.phone}"></td>

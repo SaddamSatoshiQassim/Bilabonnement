@@ -17,15 +17,16 @@
 
     <form th:action="@{/aftaler/gem}" method="post">
 
-        <label>Kunde navn</label>
-        <input type="text"
-               name="customerName"
-               placeholder="Indtast navn">
+        <label>Vælg kunde</label>
 
-        <label>Kunde email</label>
-        <input type="email"
-               name="customerEmail"
-               placeholder="Indtast email">
+        <select name="customerId" required>
+            <option value="">-- Vælg kunde --</option>
+
+            <option th:each="customer : ${customers}"
+                    th:value="${customer.id}"
+                    th:text="${customer.id + ' - ' + customer.name}">
+            </option>
+        </select>
 
         <label>Start dato</label>
         <input type="date"

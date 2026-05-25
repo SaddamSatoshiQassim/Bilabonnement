@@ -18,7 +18,7 @@ class DamageServiceTest {
 
         BigDecimal expectedTotalPrice = new BigDecimal("1500.00");
 
-        DamageService damageService = new DamageService(null);
+        DamageService damageService = new DamageService(null, null, null);
 
         BigDecimal actualTotalPrice =
                 damageService.calculateTotalDamagePrice(damageLines);
@@ -36,7 +36,7 @@ class DamageServiceTest {
 
         BigDecimal expectedTotalPrice = new BigDecimal("4000.00");
 
-        DamageService damageService = new DamageService(null);
+        DamageService damageService = new DamageService(null, null, null);
 
         BigDecimal actualTotalPrice =
                 damageService.calculateTotalDamagePrice(damageLines);
@@ -50,7 +50,7 @@ class DamageServiceTest {
 
         BigDecimal expectedTotalPrice = BigDecimal.ZERO;
 
-        DamageService damageService = new DamageService(null);
+        DamageService damageService = new DamageService(null, null, null);
 
         BigDecimal actualTotalPrice =
                 damageService.calculateTotalDamagePrice(damageLines);
