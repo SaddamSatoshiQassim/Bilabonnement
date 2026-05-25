@@ -17,34 +17,65 @@
         <h1>Bil Reservationer</h1>
 
         <a th:href="@{/aftaler/opret}">
-            <button type="button">Opret Aftale</button>
+            <button type="button">
+                Opret Aftale
+            </button>
         </a>
     </div>
 
     <table>
+
         <thead>
+
         <tr>
             <th>Kunde ID</th>
+            <th>Kunde navn</th>
             <th>Bil ID</th>
+            <th>Bil model</th>
             <th>Start dato</th>
             <th>Slut dato</th>
             <th>Afhentning</th>
             <th>Aflevering</th>
             <th>Pris</th>
         </tr>
+
         </thead>
 
         <tbody>
+
         <tr th:each="agreement : ${agreements}">
-            <td th:text="${agreement.customerId}"></td>
-            <td th:text="${agreement.carId}"></td>
-            <td th:text="${agreement.startDate}"></td>
-            <td th:text="${agreement.endDate}"></td>
-            <td th:text="${agreement.pickupLocation != null ? agreement.pickupLocation.name : ''}"></td>
-            <td th:text="${agreement.returnLocation != null ? agreement.returnLocation.name : ''}"></td>
-            <td th:text="${agreement.rentalPrice}"></td>
+
+            <td th:text="${agreement.customerId}">
+            </td>
+
+            <td th:text="${agreement.customerName}">
+            </td>
+
+            <td th:text="${agreement.carId}">
+            </td>
+
+            <td th:text="${agreement.carModel}">
+            </td>
+
+            <td th:text="${agreement.startDate}">
+            </td>
+
+            <td th:text="${agreement.endDate}">
+            </td>
+
+            <td th:text="${agreement.pickupLocation != null ? agreement.pickupLocation.name : ''}">
+            </td>
+
+            <td th:text="${agreement.returnLocation != null ? agreement.returnLocation.name : ''}">
+            </td>
+
+            <td th:text="${agreement.rentalPrice + ' kr.'}">
+            </td>
+
         </tr>
+
         </tbody>
+
     </table>
 
 </div>

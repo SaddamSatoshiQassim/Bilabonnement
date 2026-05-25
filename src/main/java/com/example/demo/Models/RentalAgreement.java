@@ -14,7 +14,9 @@ public class RentalAgreement {
     private Location pickupLocation;
     private Location returnLocation;
 
-    // Default constructor
+    private String customerName;
+    private String carModel;
+
     public RentalAgreement() {
         this.id = 0;
         this.customerId = 0;
@@ -22,32 +24,25 @@ public class RentalAgreement {
         this.startDate = null;
         this.endDate = null;
         this.rentalPrice = BigDecimal.ZERO;
-
-        // FIX
-        this.pickupLocation = new Location();
-        this.returnLocation = new Location();
+        this.pickupLocation = null;
+        this.returnLocation = null;
+        this.customerName = null;
+        this.carModel = null;
     }
 
-    // Constructor med kun datoer
     public RentalAgreement(LocalDate startDate, LocalDate endDate) {
-        this(0, 0, 0, startDate, endDate, BigDecimal.ZERO,
-                new Location(), new Location());
+        this.id = 0;
+        this.customerId = 0;
+        this.carId = 0;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.rentalPrice = BigDecimal.ZERO;
+        this.pickupLocation = null;
+        this.returnLocation = null;
+        this.customerName = null;
+        this.carModel = null;
     }
 
-    // Constructor uden customerId og carId
-    public RentalAgreement(
-            int id,
-            LocalDate startDate,
-            LocalDate endDate,
-            BigDecimal rentalPrice,
-            Location pickupLocation,
-            Location returnLocation) {
-
-        this(id, 0, 0, startDate, endDate, rentalPrice,
-                pickupLocation, returnLocation);
-    }
-
-    // Full constructor
     public RentalAgreement(
             int id,
             int customerId,
@@ -66,9 +61,10 @@ public class RentalAgreement {
         this.rentalPrice = rentalPrice;
         this.pickupLocation = pickupLocation;
         this.returnLocation = returnLocation;
+        this.customerName = null;
+        this.carModel = null;
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -101,7 +97,14 @@ public class RentalAgreement {
         return returnLocation;
     }
 
-    // Setters
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getCarModel() {
+        return carModel;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -134,7 +137,14 @@ public class RentalAgreement {
         this.returnLocation = returnLocation;
     }
 
-    // Validering af datoer
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
     public boolean hasValidDates() {
         return startDate != null
                 && endDate != null

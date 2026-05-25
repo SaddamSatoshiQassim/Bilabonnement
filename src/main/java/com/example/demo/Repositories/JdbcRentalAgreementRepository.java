@@ -20,7 +20,11 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
 
         List<RentalAgreement> rentalAgreements = new ArrayList<>();
 
-        String sql = "SELECT * FROM rental_agreement";
+        String sql =
+                "SELECT ra.*, c.name AS customer_name, car.model AS car_model " +
+                        "FROM rental_agreement ra " +
+                        "JOIN customer c ON ra.customer_id = c.customer_id " +
+                        "JOIN car car ON ra.car_id = car.car_id";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -29,10 +33,10 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
             while (resultSet.next()) {
 
                 Location pickupLocation =
-                        new Location(0, resultSet.getString("pickup_location"));
+                        new Location(resultSet.getString("pickup_location"));
 
                 Location returnLocation =
-                        new Location(0, resultSet.getString("return_location"));
+                        new Location(resultSet.getString("return_location"));
 
                 RentalAgreement rentalAgreement =
                         new RentalAgreement(
@@ -48,6 +52,12 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
                                 returnLocation
                         );
 
+                rentalAgreement.setCustomerName(
+                        resultSet.getString("customer_name"));
+
+                rentalAgreement.setCarModel(
+                        resultSet.getString("car_model"));
+
                 rentalAgreements.add(rentalAgreement);
             }
 
@@ -61,7 +71,7 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
     @Override
     public RentalAgreement findById(int id) {
 
-        String sql = "SELECT * FROM rental_agreement WHERE rental_id = ?";
+        String sql = "SELECT * FROM rental_agreement WHERE rental_id=?";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -73,10 +83,10 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
             if (resultSet.next()) {
 
                 Location pickupLocation =
-                        new Location(0, resultSet.getString("pickup_location"));
+                        new Location(resultSet.getString("pickup_location"));
 
                 Location returnLocation =
-                        new Location(0, resultSet.getString("return_location"));
+                        new Location(resultSet.getString("return_location"));
 
                 return new RentalAgreement(
                         resultSet.getInt("rental_id"),
@@ -149,7 +159,6 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
             statement.setBigDecimal(5, rentalAgreement.getRentalPrice());
             statement.setString(6, rentalAgreement.getPickupLocation().getName());
             statement.setString(7, rentalAgreement.getReturnLocation().getName());
-
             statement.setInt(8, rentalAgreement.getId());
 
             statement.executeUpdate();
@@ -168,6 +177,7 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
+
             statement.executeUpdate();
 
         } catch (SQLException e) {
