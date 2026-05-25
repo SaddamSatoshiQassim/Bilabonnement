@@ -1,20 +1,17 @@
 package com.example.demo.Models;
 
-import java.time.LocalDate;
-
 public class Location {
- private int id;
- private String name;
- private String address;
 
-    public Location(String name) {
-        this.name = name;
+    private int id;
+    private String name;
+
+    // TOM CONSTRUCTOR (VIGTIG)
+    public Location() {
     }
 
- public Location(int id, String name, String address) {
+    public Location(int id, String name) {
         this.id = id;
         this.name = name;
-        this.address = address;
     }
 
     public int getId() {
@@ -31,21 +28,5 @@ public class Location {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Location " +
-                "id " + id +
-                ", name " + name + '\'' +
-                ", address " + address + '\'';
     }
 }

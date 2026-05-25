@@ -22,13 +22,16 @@ public class RentalAgreement {
         this.startDate = null;
         this.endDate = null;
         this.rentalPrice = BigDecimal.ZERO;
-        this.pickupLocation = null;
-        this.returnLocation = null;
+
+        // FIX
+        this.pickupLocation = new Location();
+        this.returnLocation = new Location();
     }
 
     // Constructor med kun datoer
     public RentalAgreement(LocalDate startDate, LocalDate endDate) {
-        this(0, 0, 0, startDate, endDate, BigDecimal.ZERO, null, null);
+        this(0, 0, 0, startDate, endDate, BigDecimal.ZERO,
+                new Location(), new Location());
     }
 
     // Constructor uden customerId og carId
@@ -40,7 +43,8 @@ public class RentalAgreement {
             Location pickupLocation,
             Location returnLocation) {
 
-        this(id, 0, 0, startDate, endDate, rentalPrice, pickupLocation, returnLocation);
+        this(id, 0, 0, startDate, endDate, rentalPrice,
+                pickupLocation, returnLocation);
     }
 
     // Full constructor

@@ -29,10 +29,10 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
             while (resultSet.next()) {
 
                 Location pickupLocation =
-                        new Location(resultSet.getString("pickup_location"));
+                        new Location(0, resultSet.getString("pickup_location"));
 
                 Location returnLocation =
-                        new Location(resultSet.getString("return_location"));
+                        new Location(0, resultSet.getString("return_location"));
 
                 RentalAgreement rentalAgreement =
                         new RentalAgreement(
@@ -73,10 +73,10 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
             if (resultSet.next()) {
 
                 Location pickupLocation =
-                        new Location(resultSet.getString("pickup_location"));
+                        new Location(0, resultSet.getString("pickup_location"));
 
                 Location returnLocation =
-                        new Location(resultSet.getString("return_location"));
+                        new Location(0, resultSet.getString("return_location"));
 
                 return new RentalAgreement(
                         resultSet.getInt("rental_id"),
