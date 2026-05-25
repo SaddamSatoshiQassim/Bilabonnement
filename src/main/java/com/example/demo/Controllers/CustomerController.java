@@ -25,7 +25,7 @@ public class CustomerController {
 
     @GetMapping("/kunder/opret")
     public String createForm(Model model) {
-        model.addAttribute("customer", new Customer(0, null, null, null));
+        model.addAttribute("customer", new Customer());
         return "opret-kunde";
     }
 

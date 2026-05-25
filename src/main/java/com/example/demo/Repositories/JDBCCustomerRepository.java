@@ -17,12 +17,12 @@ public class JDBCCustomerRepository implements CustomerRepository {
     @Override
     public List<Customer> findAll() {
         List<Customer> customers = new ArrayList<>();
+
         String sql = "SELECT * FROM customer";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 Customer customer = new Customer(
@@ -36,7 +36,7 @@ public class JDBCCustomerRepository implements CustomerRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("Der er fejl i findAll: " + e.getMessage());
+            System.out.println("Fejl: kunne ikke hente kunder " + e.getMessage());
         }
 
         return customers;
@@ -46,9 +46,9 @@ public class JDBCCustomerRepository implements CustomerRepository {
     public Customer findById(int id) {
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -63,7 +63,7 @@ public class JDBCCustomerRepository implements CustomerRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("Der er fejl i findById: " + e.getMessage());
+            System.out.println("Fejl: kunne ikke finde kunde " + e.getMessage());
         }
 
         return null;
@@ -71,12 +71,10 @@ public class JDBCCustomerRepository implements CustomerRepository {
 
     @Override
     public void save(Customer customer) {
+        String sql = "INSERT INTO customer (name, email, phone) VALUES (?, ?, ?)";
 
-        String sql = "INSERT INTO customer(name, email, phone) VALUES (?, ?, ?)";
-
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getEmail());
@@ -85,18 +83,16 @@ public class JDBCCustomerRepository implements CustomerRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Der er fejl i save: " + e.getMessage());
+            System.out.println("Fejl: kunne ikke gemme kunde " + e.getMessage());
         }
     }
 
     @Override
     public void update(Customer customer) {
-
         String sql = "UPDATE customer SET name = ?, email = ?, phone = ? WHERE customer_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getEmail());
@@ -106,26 +102,22 @@ public class JDBCCustomerRepository implements CustomerRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Der er fejl i update: " + e.getMessage());
+            System.out.println("Fejl: kunne ikke opdatere kunde " + e.getMessage());
         }
     }
 
     @Override
     public void deleteById(int id) {
-
         String sql = "DELETE FROM customer WHERE customer_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Der er fejl i deleteById: " + e.getMessage());
+            System.out.println("Fejl: kunne ikke slette kunde " + e.getMessage());
         }
     }
 }
-

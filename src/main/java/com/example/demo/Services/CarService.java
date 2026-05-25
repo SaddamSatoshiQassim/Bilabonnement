@@ -4,6 +4,7 @@ import com.example.demo.Models.Car;
 import com.example.demo.Models.CarStatus;
 import com.example.demo.Repositories.CarRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ CarService {
     private final CarRepository carRepository;
     public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
+    }
+    public List<Car> getAllCars() {
+        return carRepository.findAll();
     }
 
     public List<Car> getAll() {
@@ -33,6 +37,7 @@ CarService {
     }
 
     //update status
+    @Transactional
     public void markCarAsAvailable(int carId){
         Car car = carRepository.findById(carId);
 
@@ -48,6 +53,7 @@ CarService {
         );
     }
 
+    @Transactional
     public void markCarAsRented(int carId){
 
         Car car = carRepository.findById(carId);
@@ -64,6 +70,7 @@ CarService {
         );
     }
 
+    @Transactional
     public void markCarAsReturned(int carId){
 
         Car car = carRepository.findById(carId);
@@ -80,6 +87,7 @@ CarService {
         );
     }
 
+    @Transactional
     public void markCarAsDamaged(int carId){
 
         Car car = carRepository.findById(carId);
@@ -96,6 +104,7 @@ CarService {
         );
     }
 
+    @Transactional
     public void markCarAsUnderRepair(int carId){
 
         Car car = carRepository.findById(carId);

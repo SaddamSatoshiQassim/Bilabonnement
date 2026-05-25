@@ -15,5 +15,7 @@ public interface DamageReportRepository {
     public void update(DamageReport damageReport);
 
     public void deleteById(int id);
+
+    int saveAndReturnId(DamageReport damageReport);
 }
 

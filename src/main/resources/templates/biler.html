@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>Biler</title>
-
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
@@ -23,7 +21,9 @@
             <summary>
                 <img src="/Images/bmw-320i.jpg" class="car-img" alt="BMW 320i">
                 <h3>BMW 320i</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -35,6 +35,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Benzin</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="1">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -42,7 +47,9 @@
             <summary>
                 <img src="/Images/bmw-520d.jpg" class="car-img" alt="BMW 520d">
                 <h3>BMW 520d</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -54,6 +61,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Diesel</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="2">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -61,7 +73,9 @@
             <summary>
                 <img src="/Images/bmw-x5.jpg" class="car-img" alt="BMW X5">
                 <h3>BMW X5</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -73,6 +87,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Diesel</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="3">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -80,7 +99,9 @@
             <summary>
                 <img src="/Images/mercedes-e200.jpg" class="car-img" alt="Mercedes E200">
                 <h3>Mercedes E200</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -92,6 +113,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Benzin</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="4">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -99,7 +125,9 @@
             <summary>
                 <img src="/Images/mercedes-e220.jpg" class="car-img" alt="Mercedes E220">
                 <h3>Mercedes E220</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -111,6 +139,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Diesel</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="5">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -118,7 +151,9 @@
             <summary>
                 <img src="/Images/mercedes-glc.jpg" class="car-img" alt="Mercedes GLC">
                 <h3>Mercedes GLC</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -130,6 +165,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Diesel</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="6">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -137,7 +177,9 @@
             <summary>
                 <img src="/Images/toyota-auris.jpg" class="car-img" alt="Toyota Auris">
                 <h3>Toyota Auris</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -149,6 +191,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Hybrid</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="7">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -156,7 +203,9 @@
             <summary>
                 <img src="/Images/toyota-corolla.jpg" class="car-img" alt="Toyota Corolla">
                 <h3>Toyota Corolla</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -168,6 +217,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Hybrid</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="8">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -175,7 +229,9 @@
             <summary>
                 <img src="/Images/toyota-yaris.jpg" class="car-img" alt="Toyota Yaris">
                 <h3>Toyota Yaris</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -187,6 +243,11 @@
                 <p><b>Gear:</b> Manuel</p>
                 <p><b>Brændstof:</b> Benzin</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="9">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -194,7 +255,9 @@
             <summary>
                 <img src="/Images/volkswagen-golf.jpg" class="car-img" alt="Volkswagen Golf">
                 <h3>Volkswagen Golf</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -206,6 +269,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Benzin</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="10">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -213,7 +281,9 @@
             <summary>
                 <img src="/Images/volkswagen-pasat.jpg" class="car-img" alt="Volkswagen Passat">
                 <h3>Volkswagen Passat</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -225,6 +295,11 @@
                 <p><b>Gear:</b> Automatisk</p>
                 <p><b>Brændstof:</b> Diesel</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="11">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -232,7 +307,9 @@
             <summary>
                 <img src="/Images/volkswagen-polo.jpg" class="car-img" alt="Volkswagen Polo">
                 <h3>Volkswagen Polo</h3>
-                <p class="status-line"><span class="status-badge ledig">Ledig</span></p>
+                <p class="status-line">
+                    <span class="status-badge ledig">Ledig</span>
+                </p>
             </summary>
 
             <div class="car-info">
@@ -244,6 +321,11 @@
                 <p><b>Gear:</b> Manuel</p>
                 <p><b>Brændstof:</b> Benzin</p>
                 <p><b>Sæder:</b> 5</p>
+
+                <form action="/biler/ledig" method="post">
+                    <input type="hidden" name="carId" value="12">
+                    <button type="submit">Sæt som ledig</button>
+                </form>
             </div>
         </details>
 
@@ -252,5 +334,4 @@
 </div>
 
 </body>
-
 </html>

@@ -3,6 +3,7 @@ package com.example.demo.Services;
 import com.example.demo.Models.RentalAgreement;
 import com.example.demo.Repositories.RentalAgreementRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class RentalAgreementService {
         return repository.findAll();
     }
 
+    @Transactional
     public void addAgreement(RentalAgreement agreement) {
         repository.save(agreement);
     }

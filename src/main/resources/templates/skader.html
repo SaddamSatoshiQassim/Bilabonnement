@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Skader</title>
@@ -8,40 +8,33 @@
 
 <body>
 
-<div th:replace="~{fragments/sidebar::sidebar}">
-</div>
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="content">
 
     <h1>Skader</h1>
 
     <a th:href="@{/skader/opret}">
-        <button>
-            Opret skade
-        </button>
+        <button type="button">Opret skade</button>
     </a>
 
     <table>
         <tr>
             <th>Dato</th>
+            <th>Bil ID</th>
             <th>Beskrivelse</th>
             <th>Pris</th>
         </tr>
 
         <tr th:each="damage : ${damageReports}">
-
             <td th:text="${damage.reportDate}"></td>
-
+            <td th:text="${damage.carId}"></td>
             <td th:text="${damage.description}"></td>
-
-            <td th:text="${damage.totalPrice}"></td>
-
+            <td th:text="${damage.totalPrice + ' kr'}"></td>
         </tr>
-
     </table>
 
 </div>
 
 </body>
-
 </html>
