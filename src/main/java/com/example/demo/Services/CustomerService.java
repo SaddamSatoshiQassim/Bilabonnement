@@ -28,6 +28,18 @@ public class CustomerService {
 
     @Transactional
     public void createCustomer(Customer customer) {
+
+        if (!customer.getEmail().contains("@") ||
+                !customer.getEmail().contains(".")) {
+
+            throw new IllegalArgumentException("Ugyldig email");
+        }
+
+        if (!customer.getPhone().matches("\\d{8}")) {
+
+            throw new IllegalArgumentException("Telefonnummer skal være 8 tal");
+        }
+
         customerRepository.save(customer);
     }
 

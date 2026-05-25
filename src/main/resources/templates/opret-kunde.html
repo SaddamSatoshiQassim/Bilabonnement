@@ -29,12 +29,18 @@
         <input
                 type="email"
                 th:field="*{email}"
-                placeholder="Email">
+                placeholder="Email"
+                pattern="^[^@]+@[^@]+\.[^@]+$"
+                title="Email skal indeholde @ og punktum"
+                required>
 
         <input
                 type="text"
                 th:field="*{phone}"
-                placeholder="Telefon">
+                placeholder="Telefon"
+                pattern="[0-9]{8}"
+                title="Telefonnummer skal være præcis 8 tal"
+                required>
 
         <button type="submit">
             Gem

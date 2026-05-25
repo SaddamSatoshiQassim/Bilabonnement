@@ -5,7 +5,7 @@ public class Customer {
     private String name;
     private String email;
     private String phone;
-    private String secondphone;
+
 
     public Customer(int id, String name, String email, String phone) {
         this.id = id;
@@ -54,7 +54,5 @@ public class Customer {
         this.phone = phone;
     }
 
-    public void setSecondphone(String secondphone) {
-        this.secondphone = secondphone;
-    }
+
 }
