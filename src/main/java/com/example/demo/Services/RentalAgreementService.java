@@ -55,4 +55,12 @@ public class RentalAgreementService {
 
         repository.save(agreement);
     }
+    public RentalAgreement getAgreementById(int id) {
+        return repository.findById(id);
+    }
+
+    @Transactional
+    public void updateAgreement(RentalAgreement agreement) {
+        repository.update(agreement);
+    }
 }

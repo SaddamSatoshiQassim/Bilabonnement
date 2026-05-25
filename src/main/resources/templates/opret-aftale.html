@@ -14,17 +14,21 @@
 <div class="content">
 
     <div class="topbar">
-        <h1>Opret bil reservation</h1>
+        <h1 th:text="${agreement.id == 0 ? 'Opret bil reservation' : 'Rediger bil reservation'}"></h1>
 
         <a th:href="@{/aftaler}">
             <button type="button">← Tilbage</button>
         </a>
     </div>
 
-    <form th:action="@{/aftaler/gem}" method="post">
+    <form th:action="${agreement.id == 0} ? @{/aftaler/gem} : @{/aftaler/opdater}"
+          th:object="${agreement}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
 
         <label>Vælg kunde</label>
-        <select name="customerId" required>
+        <select th:field="*{customerId}" required>
 
             <option value="">-- Vælg kunde --</option>
 
@@ -37,17 +41,16 @@
 
         <label>Start dato</label>
         <input type="date"
-               name="startDate"
+               th:field="*{startDate}"
                required>
 
         <label>Slut dato</label>
         <input type="date"
-               name="endDate"
+               th:field="*{endDate}"
                required>
 
         <label>Vælg bil</label>
-
-        <select name="carId" required>
+        <select th:field="*{carId}" required>
 
             <option value="">-- Vælg bil --</option>
 
@@ -59,23 +62,21 @@
         </select>
 
         <label>Afhentningssted</label>
-
         <input type="text"
-               name="pickupLocation.name"
+               th:field="*{pickupLocation.name}"
                placeholder="Fx København"
                required>
 
         <label>Afleveringssted</label>
-
         <input type="text"
-               name="returnLocation.name"
+               th:field="*{returnLocation.name}"
                placeholder="Fx Aarhus"
                required>
 
         <div style="display:flex; gap:10px; margin-top:20px;">
 
-            <button type="submit">
-                Gem
+            <button type="submit"
+                    th:text="${agreement.id == 0 ? 'Gem' : 'Opdater'}">
             </button>
 
             <a th:href="@{/aftaler}">

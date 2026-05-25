@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.BigDecimal;
@@ -74,6 +75,31 @@ public class RentalAgreementController {
         service.addAgreement(agreement);
 
         carService.markCarAsRented(agreement.getCarId());
+
+        return "redirect:/aftaler";
+    }
+    @GetMapping("/aftaler/rediger/{id}")
+    public String editAgreement(@PathVariable int id, Model model) {
+
+        RentalAgreement agreement =
+                service.getAgreementById(id);
+
+        model.addAttribute("agreement", agreement);
+
+        model.addAttribute("cars",
+                carService.getAll());
+
+        model.addAttribute("customers",
+                customerService.getAllCustomers());
+
+        return "opret-aftale";
+    }
+
+    @PostMapping("/aftaler/opdater")
+    public String updateAgreement(
+            @ModelAttribute RentalAgreement agreement) {
+
+        service.updateAgreement(agreement);
 
         return "redirect:/aftaler";
     }
