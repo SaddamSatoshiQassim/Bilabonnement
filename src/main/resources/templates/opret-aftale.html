@@ -25,14 +25,11 @@
 
         <label>Vælg kunde</label>
         <select name="customerId" required>
-
             <option value="">-- Vælg kunde --</option>
-
             <option th:each="customer : ${customers}"
                     th:value="${customer.id}"
                     th:text="${customer.name}">
             </option>
-
         </select>
 
         <label>Start dato</label>
