@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Opret aftale</title>
@@ -7,52 +8,69 @@
 </head>
 
 <body>
+
 <div th:replace="~{fragments/sidebar::sidebar}"></div>
 
 <div class="content">
+
     <div class="topbar">
         <h1>Opret bil reservation</h1>
-        <a th:href="@{/aftaler}"><button type="button">← Tilbage</button></a>
+
+        <a th:href="@{/aftaler}">
+            <button type="button">← Tilbage</button>
+        </a>
     </div>
 
     <form th:action="@{/aftaler/gem}" method="post">
 
-        <label>Vaelg kunde</label>
-
+        <label>Vælg kunde</label>
         <select name="customerId" required>
+
             <option value="">-- Vælg kunde --</option>
 
             <option th:each="customer : ${customers}"
                     th:value="${customer.id}"
-                    th:text="${customer.id + ' - ' + customer.name}">
+                    th:text="${customer.name}">
             </option>
+
         </select>
 
         <label>Start dato</label>
         <input type="date"
-               name="startDate">
+               name="startDate"
+               required>
 
         <label>Slut dato</label>
         <input type="date"
-               name="endDate">
+               name="endDate"
+               required>
 
         <label>Vælg bil</label>
 
-        <select name="carId">
+        <select name="carId" required>
 
-            <option
-                    th:each="car : ${cars}"
+            <option value="">-- Vælg bil --</option>
+
+            <option th:each="car : ${cars}"
                     th:value="${car.id}"
-                    th:text="${car.brand + ' ' + car.model}">
+                    th:text="${car.brand + ' ' + car.model + ' - ' + car.basePrice + ' kr/dag'}">
             </option>
 
         </select>
 
-        <label>Pris</label>
+        <label>Afhentningssted</label>
 
         <input type="text"
-               value="Auto genereres"
-               disabled>
+               name="pickupLocation.name"
+               placeholder="Fx København"
+               required>
+
+        <label>Afleveringssted</label>
+
+        <input type="text"
+               name="returnLocation.name"
+               placeholder="Fx Aarhus"
+               required>
 
         <div style="display:flex; gap:10px; margin-top:20px;">
 
@@ -69,7 +87,8 @@
         </div>
 
     </form>
-</div>
-</body>
 
+</div>
+
+</body>
 </html>
