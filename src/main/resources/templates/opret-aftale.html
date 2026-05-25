@@ -21,9 +21,9 @@
         </a>
     </div>
 
-    <form th:action="${agreement.id == 0} ? @{/aftaler/gem} : @{/aftaler/opdater}"
-          th:object="${agreement}"
-          method="post">
+    <<form th:action="@{${agreement.id == 0 ? '/aftaler/gem' : '/aftaler/opdater'}}"
+           th:object="${agreement}"
+           method="post">
 
         <input type="hidden" th:field="*{id}">
 
