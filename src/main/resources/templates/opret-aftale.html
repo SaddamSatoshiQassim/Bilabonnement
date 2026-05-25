@@ -14,29 +14,27 @@
 <div class="content">
 
     <div class="topbar">
-        <h1 th:text="${agreement.id == 0 ? 'Opret bil reservation' : 'Rediger bil reservation'}"></h1>
+        <h1>Opret / Rediger bil reservation</h1>
 
         <a th:href="@{/aftaler}">
             <button type="button">← Tilbage</button>
         </a>
     </div>
 
-    <<form th:action="@{${agreement.id == 0 ? '/aftaler/gem' : '/aftaler/opdater'}}"
-           th:object="${agreement}"
-           method="post">
+    <form th:action="@{/aftaler/gem}"
+          th:object="${agreement}"
+          method="post">
 
         <input type="hidden" th:field="*{id}">
 
         <label>Vælg kunde</label>
         <select th:field="*{customerId}" required>
-
-            <option value="">-- Vælg kunde --</option>
+            <option value="0">-- Vælg kunde --</option>
 
             <option th:each="customer : ${customers}"
                     th:value="${customer.id}"
                     th:text="${customer.name}">
             </option>
-
         </select>
 
         <label>Start dato</label>
@@ -51,14 +49,12 @@
 
         <label>Vælg bil</label>
         <select th:field="*{carId}" required>
-
-            <option value="">-- Vælg bil --</option>
+            <option value="0">-- Vælg bil --</option>
 
             <option th:each="car : ${cars}"
                     th:value="${car.id}"
                     th:text="${car.brand + ' ' + car.model + ' - ' + car.basePrice + ' kr/dag'}">
             </option>
-
         </select>
 
         <label>Afhentningssted</label>
@@ -75,8 +71,8 @@
 
         <div style="display:flex; gap:10px; margin-top:20px;">
 
-            <button type="submit"
-                    th:text="${agreement.id == 0 ? 'Gem' : 'Opdater'}">
+            <button type="submit">
+                Gem
             </button>
 
             <a th:href="@{/aftaler}">

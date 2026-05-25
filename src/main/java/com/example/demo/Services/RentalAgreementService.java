@@ -12,7 +12,9 @@ public class RentalAgreementService {
 
     private final RentalAgreementRepository repository;
 
-    public RentalAgreementService(RentalAgreementRepository repository) {
+    public RentalAgreementService(
+            RentalAgreementRepository repository) {
+
         this.repository = repository;
     }
 
@@ -20,8 +22,13 @@ public class RentalAgreementService {
         return repository.findAll();
     }
 
+    public RentalAgreement getAgreementById(int id) {
+        return repository.findById(id);
+    }
+
     @Transactional
-    public void addAgreement(RentalAgreement agreement) {
+    public void saveOrUpdateAgreement(
+            RentalAgreement agreement) {
 
         if (agreement.getCustomerId() <= 0) {
             throw new IllegalArgumentException(
@@ -39,28 +46,19 @@ public class RentalAgreementService {
         }
 
         if (agreement.getEndDate() != null &&
-                agreement.getEndDate().isBefore(
-                        agreement.getStartDate())) {
+                agreement.getEndDate()
+                        .isBefore(
+                                agreement.getStartDate())) {
 
             throw new IllegalArgumentException(
                     "Slutdato kan ikke være før startdato");
         }
 
-        if (agreement.getRentalPrice() == null ||
-                agreement.getRentalPrice().doubleValue() < 0) {
-
-            throw new IllegalArgumentException(
-                    "Prisen kan ikke være negativ");
+        if (agreement.getId() == 0) {
+            repository.save(agreement);
         }
-
-        repository.save(agreement);
-    }
-    public RentalAgreement getAgreementById(int id) {
-        return repository.findById(id);
-    }
-
-    @Transactional
-    public void updateAgreement(RentalAgreement agreement) {
-        repository.update(agreement);
+        else {
+            repository.update(agreement);
+        }
     }
 }
