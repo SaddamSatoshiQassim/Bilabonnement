@@ -8,6 +8,7 @@ import com.example.demo.Repositories.DamageLineRepository;
 import com.example.demo.Repositories.DamageReportRepository;
 import com.example.demo.Repositories.JdbcCarRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -41,6 +42,7 @@ public class DamageService {
         return repository.findById(id);
     }
 
+    @Transactional
     public void addDamageReport(DamageReport damageReport, List<String> damages) {
         int reportId = repository.saveAndReturnId(damageReport);
 
@@ -57,10 +59,12 @@ public class DamageService {
         }
     }
 
+    @Transactional
     public void updateDamageReport(DamageReport damageReport) {
         repository.update(damageReport);
     }
 
+    @Transactional
     public void deleteDamageReportById(int id) {
         repository.deleteById(id);
     }
