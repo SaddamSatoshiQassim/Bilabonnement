@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Models.Car;
 import com.example.demo.Models.Location;
 import com.example.demo.Models.RentalAgreement;
 import com.example.demo.Services.CarService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
 
 @Controller
 public class RentalAgreementController {
@@ -45,11 +47,6 @@ public class RentalAgreementController {
     @PostMapping("/aftaler/gem")
     public String saveAgreement(@ModelAttribute RentalAgreement agreement) {
 
-        if (agreement.getRentalPrice() == null ||
-                agreement.getRentalPrice().compareTo(BigDecimal.ZERO) == 0) {
-            agreement.setRentalPrice(new BigDecimal("1000"));
-        }
-
         if (agreement.getPickupLocation() == null) {
             agreement.setPickupLocation(new Location());
         }
@@ -58,7 +55,24 @@ public class RentalAgreementController {
             agreement.setReturnLocation(new Location());
         }
 
+        Car car = carService.findById(agreement.getCarId());
+
+        long days = ChronoUnit.DAYS.between(
+                agreement.getStartDate(),
+                agreement.getEndDate()
+        );
+
+        if (days <= 0) {
+            days = 1;
+        }
+
+        BigDecimal totalPrice =
+                car.getBasePrice().multiply(BigDecimal.valueOf(days));
+
+        agreement.setRentalPrice(totalPrice);
+
         service.addAgreement(agreement);
+
         carService.markCarAsRented(agreement.getCarId());
 
         return "redirect:/aftaler";

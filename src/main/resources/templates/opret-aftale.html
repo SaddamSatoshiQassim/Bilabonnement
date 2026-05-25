@@ -32,17 +32,18 @@
         </select>
 
         <label>Start dato</label>
-        <input type="date" name="startDate" required>
+        <input type="date" name="startDate" id="startDate" required>
 
         <label>Slut dato</label>
-        <input type="date" name="endDate" required>
+        <input type="date" name="endDate" id="endDate" required>
 
         <label>Vælg bil</label>
-        <select name="carId" required>
+        <select name="carId" id="carSelect" required>
             <option value="">-- Vælg bil --</option>
             <option th:each="car : ${cars}"
                     th:value="${car.id}"
-                    th:text="${car.brand + ' ' + car.model}">
+                    th:data-price="${car.basePrice}"
+                    th:text="${car.brand + ' ' + car.model + ' - ' + car.basePrice + ' kr/dag'}">
             </option>
         </select>
 
@@ -59,10 +60,10 @@
                required>
 
         <label>Pris</label>
-        <input type="number"
-               name="rentalPrice"
-               placeholder="Indtast pris"
-               required>
+        <input type="text"
+               id="pricePreview"
+               value="Vælg bil og datoer"
+               readonly>
 
         <div style="display:flex; gap:10px; margin-top:20px;">
 
@@ -77,6 +78,40 @@
     </form>
 
 </div>
+
+<script>
+    const carSelect = document.getElementById("carSelect");
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+    const pricePreview = document.getElementById("pricePreview");
+
+    function calculatePrice() {
+        const selectedCar = carSelect.options[carSelect.selectedIndex];
+
+        if (!selectedCar || !selectedCar.dataset.price || !startDate.value || !endDate.value) {
+            pricePreview.value = "Vælg bil og datoer";
+            return;
+        }
+
+        const pricePerDay = Number(selectedCar.dataset.price);
+        const start = new Date(startDate.value);
+        const end = new Date(endDate.value);
+
+        let days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+        if (days <= 0) {
+            days = 1;
+        }
+
+        const total = pricePerDay * days;
+
+        pricePreview.value = total + " kr";
+    }
+
+    carSelect.addEventListener("change", calculatePrice);
+    startDate.addEventListener("change", calculatePrice);
+    endDate.addEventListener("change", calculatePrice);
+</script>
 
 </body>
 </html>

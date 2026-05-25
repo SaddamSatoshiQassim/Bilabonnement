@@ -1,18 +1,25 @@
 package com.example.demo.Models;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.math.BigDecimal;
 
 public class Car {
+
     private int id;
     private String vin;
     private String brand;
     private String model;
     private CarStatus status;
+
+    // Pris pr dag
     private BigDecimal basePrice;
 
-    public Car(int id,  String vin, String brand, String model, CarStatus status, BigDecimal basePrice) {
+    public Car(int id,
+               String vin,
+               String brand,
+               String model,
+               CarStatus status,
+               BigDecimal basePrice) {
+
         this.id = id;
         this.vin = vin;
         this.brand = brand;
@@ -41,6 +48,16 @@ public class Car {
         return status;
     }
 
+    // VIGTIG FIX
+    public BigDecimal getPricePerDay() {
+        return basePrice;
+    }
+
+    // Du kan også beholde denne
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
     public void markAsAvailable() {
         this.status = CarStatus.AVAILABLE;
     }
@@ -59,9 +76,5 @@ public class Car {
 
     public void markAsUnderRepair() {
         this.status = CarStatus.UNDER_REPAIR;
-    }
-
-    public BigDecimal getBasePrice() {
-        return basePrice;
     }
 }
