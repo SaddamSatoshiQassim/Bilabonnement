@@ -17,10 +17,18 @@
 
     <div class="car-grid">
 
+        <!-- BMW 320i -->
         <details class="car-card">
             <summary>
                 <img src="/Images/bmw-320i.jpg" class="car-img" alt="BMW 320i">
-                <h3>BMW 320i</h3>
+
+                <h3>
+                    BMW 320i
+                    <span class="status-dot"
+                          th:classappend="${cars[0].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[0].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -43,10 +51,18 @@
             </div>
         </details>
 
+        <!-- BMW 520d -->
         <details class="car-card">
             <summary>
                 <img src="/Images/bmw-520d.jpg" class="car-img" alt="BMW 520d">
-                <h3>BMW 520d</h3>
+
+                <h3>
+                    BMW 520d
+                    <span class="status-dot"
+                          th:classappend="${cars[1].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[1].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -69,10 +85,18 @@
             </div>
         </details>
 
+        <!-- BMW X5 -->
         <details class="car-card">
             <summary>
                 <img src="/Images/bmw-x5.jpg" class="car-img" alt="BMW X5">
-                <h3>BMW X5</h3>
+
+                <h3>
+                    BMW X5
+                    <span class="status-dot"
+                          th:classappend="${cars[2].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[2].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -95,10 +119,18 @@
             </div>
         </details>
 
+        <!-- Mercedes E200 -->
         <details class="car-card">
             <summary>
                 <img src="/Images/mercedes-e200.jpg" class="car-img" alt="Mercedes E200">
-                <h3>Mercedes E200</h3>
+
+                <h3>
+                    Mercedes E200
+                    <span class="status-dot"
+                          th:classappend="${cars[3].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[3].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -121,10 +153,18 @@
             </div>
         </details>
 
+        <!-- Mercedes E220 -->
         <details class="car-card">
             <summary>
                 <img src="/Images/mercedes-e220.jpg" class="car-img" alt="Mercedes E220">
-                <h3>Mercedes E220</h3>
+
+                <h3>
+                    Mercedes E220
+                    <span class="status-dot"
+                          th:classappend="${cars[4].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[4].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -147,10 +187,18 @@
             </div>
         </details>
 
+        <!-- Mercedes GLC -->
         <details class="car-card">
             <summary>
                 <img src="/Images/mercedes-glc.jpg" class="car-img" alt="Mercedes GLC">
-                <h3>Mercedes GLC</h3>
+
+                <h3>
+                    Mercedes GLC
+                    <span class="status-dot"
+                          th:classappend="${cars[5].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[5].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -173,10 +221,18 @@
             </div>
         </details>
 
+        <!-- Toyota Auris -->
         <details class="car-card">
             <summary>
                 <img src="/Images/toyota-auris.jpg" class="car-img" alt="Toyota Auris">
-                <h3>Toyota Auris</h3>
+
+                <h3>
+                    Toyota Auris
+                    <span class="status-dot"
+                          th:classappend="${cars[6].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[6].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -199,10 +255,18 @@
             </div>
         </details>
 
+        <!-- Toyota Corolla -->
         <details class="car-card">
             <summary>
                 <img src="/Images/toyota-corolla.jpg" class="car-img" alt="Toyota Corolla">
-                <h3>Toyota Corolla</h3>
+
+                <h3>
+                    Toyota Corolla
+                    <span class="status-dot"
+                          th:classappend="${cars[7].status.name() == 'AVAILABLE'} ? 'status-green' :
+                          (${cars[7].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -224,11 +288,18 @@
                 </form>
             </div>
         </details>
-
+        <!-- Toyota Yaris -->
         <details class="car-card">
             <summary>
                 <img src="/Images/toyota-yaris.jpg" class="car-img" alt="Toyota Yaris">
-                <h3>Toyota Yaris</h3>
+
+                <h3>
+                    Toyota Yaris
+                    <span class="status-dot"
+                          th:classappend="${cars[8].status.name() == 'AVAILABLE'} ? 'status-green' :
+                  (${cars[8].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -251,10 +322,18 @@
             </div>
         </details>
 
+        <!-- Volkswagen Golf -->
         <details class="car-card">
             <summary>
                 <img src="/Images/volkswagen-golf.jpg" class="car-img" alt="Volkswagen Golf">
-                <h3>Volkswagen Golf</h3>
+
+                <h3>
+                    Volkswagen Golf
+                    <span class="status-dot"
+                          th:classappend="${cars[9].status.name() == 'AVAILABLE'} ? 'status-green' :
+                  (${cars[9].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -277,10 +356,18 @@
             </div>
         </details>
 
+        <!-- Volkswagen Passat -->
         <details class="car-card">
             <summary>
                 <img src="/Images/volkswagen-pasat.jpg" class="car-img" alt="Volkswagen Passat">
-                <h3>Volkswagen Passat</h3>
+
+                <h3>
+                    Volkswagen Passat
+                    <span class="status-dot"
+                          th:classappend="${cars[10].status.name() == 'AVAILABLE'} ? 'status-green' :
+                  (${cars[10].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>
@@ -303,10 +390,18 @@
             </div>
         </details>
 
+        <!-- Volkswagen Polo -->
         <details class="car-card">
             <summary>
                 <img src="/Images/volkswagen-polo.jpg" class="car-img" alt="Volkswagen Polo">
-                <h3>Volkswagen Polo</h3>
+
+                <h3>
+                    Volkswagen Polo
+                    <span class="status-dot"
+                          th:classappend="${cars[11].status.name() == 'AVAILABLE'} ? 'status-green' :
+                  (${cars[11].status.name() == 'UNAVAILABLE'} ? 'status-yellow' : 'status-red')"></span>
+                </h3>
+
                 <p class="status-line">
                     <span class="status-badge ledig">Ledig</span>
                 </p>

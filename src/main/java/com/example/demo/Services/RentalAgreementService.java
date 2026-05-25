@@ -1,58 +1,78 @@
 package com.example.demo.Services;
 
+import com.example.demo.Models.Car;
 import com.example.demo.Models.RentalAgreement;
 import com.example.demo.Repositories.RentalAgreementRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
 public class RentalAgreementService {
 
     private final RentalAgreementRepository repository;
+    private final CarService carService;
 
-    public RentalAgreementService(RentalAgreementRepository repository) {
+    public RentalAgreementService(RentalAgreementRepository repository, CarService carService) {
         this.repository = repository;
+        this.carService = carService;
     }
+
 
     public List<RentalAgreement> getAllAgreements() {
         return repository.findAll();
     }
 
+    public RentalAgreement getAgreementById(int id) {
+        return repository.findById(id);
+    }
+
     @Transactional
-    public void addAgreement(RentalAgreement agreement) {
+    public void saveOrUpdateAgreement(RentalAgreement agreement) {
 
         if (agreement.getCustomerId() <= 0) {
-            throw new IllegalArgumentException(
-                    "Du skal vælge en kunde");
+            throw new IllegalArgumentException("Du skal vælge en kunde");
         }
 
         if (agreement.getCarId() <= 0) {
-            throw new IllegalArgumentException(
-                    "Du skal vælge en bil");
+            throw new IllegalArgumentException("Du skal vælge en bil");
         }
 
         if (agreement.getStartDate() == null) {
-            throw new IllegalArgumentException(
-                    "Startdato skal udfyldes");
+            throw new IllegalArgumentException("Startdato skal udfyldes");
         }
 
-        if (agreement.getEndDate() != null &&
-                agreement.getEndDate().isBefore(
-                        agreement.getStartDate())) {
-
-            throw new IllegalArgumentException(
-                    "Slutdato kan ikke være før startdato");
+        if (agreement.getEndDate() == null) {
+            throw new IllegalArgumentException("Slutdato skal udfyldes");
         }
 
-        if (agreement.getRentalPrice() == null ||
-                agreement.getRentalPrice().doubleValue() < 0) {
-
-            throw new IllegalArgumentException(
-                    "Prisen kan ikke være negativ");
+        if (agreement.getEndDate().isBefore(agreement.getStartDate())) {
+            throw new IllegalArgumentException("Slutdato kan ikke være før startdato");
         }
 
-        repository.save(agreement);
+        Car car = carService.findById(agreement.getCarId());
+
+        long days = ChronoUnit.DAYS.between(
+                agreement.getStartDate(),
+                agreement.getEndDate()
+        );
+
+        if (days <= 0) {
+            days = 1;
+        }
+
+        BigDecimal totalPrice = car.getBasePrice()
+                .multiply(BigDecimal.valueOf(days));
+
+        agreement.setRentalPrice(totalPrice);
+
+        if (agreement.getId() == 0) {
+            repository.save(agreement);
+        } else {
+            repository.update(agreement);
+        }
     }
 }
