@@ -43,6 +43,7 @@ public class RentalAgreementController {
     @PostMapping("/aftaler/gem")
     public String saveAgreement(@ModelAttribute RentalAgreement agreement) {
         service.addAgreement(agreement);
+        carService.markCarAsRented(agreement.getCarId());
         return "redirect:/aftaler";
     }
 }

@@ -46,7 +46,7 @@ public class DamageReportController {
                                    @RequestParam(required = false) List<String> damage) {
 
         service.addDamageReport(damageReport, damage);
-
+        carService.markCarAsDamaged(damageReport.getCarId());
         return "redirect:/skader";
     }
 }
