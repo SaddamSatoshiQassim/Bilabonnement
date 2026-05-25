@@ -58,7 +58,7 @@
 
             <td th:text="${car.status}"
                 th:classappend="${car.status.name() == 'AVAILABLE'} ? 'status-available' :
-                    (${car.status.name() == 'RENTED'} ? 'status-rented' : 'status-damaged')">
+          (${car.status.name() == 'UNAVAILABLE'} ? 'status-rented' : 'status-damaged')">
             </td>
         </tr>
 

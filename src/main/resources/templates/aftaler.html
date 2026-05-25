@@ -24,22 +24,21 @@
     <table>
 
         <tr>
-            <th>Kunde Navn</th>
-            <th>Kunde Email</th>
-            <th>Nummerplade</th>
+            <th>Kunde ID</th>
+            <th>Bil ID</th>
             <th>Start dato</th>
             <th>Slut dato</th>
-            <th>Handling / Pris</th>
+            <th>Pris</th>
         </tr>
 
         <th:block th:each="agreement, stat : ${agreements}">
 
             <tr>
-                <td th:text="${agreement.customerName}"></td>
-                <td th:text="${agreement.customerEmail}"></td>
-                <td th:text="${agreement.carPlate}"></td>
+                <td th:text="${agreement.customerId}"></td>
+                <td th:text="${agreement.carId}"></td>
                 <td th:text="${agreement.startDate}"></td>
                 <td th:text="${agreement.endDate}"></td>
+                <td th:text="${agreement.rentalPrice}"></td>
 
                 <td>
 
