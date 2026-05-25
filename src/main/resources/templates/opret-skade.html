@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret skade</title>
@@ -7,26 +7,32 @@
 </head>
 
 <body>
-<div th:replace="~{fragments/sidebar::sidebar}"></div>
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="content">
+
     <div class="topbar">
         <h1>Opret skadesrapport</h1>
-        <a th:href="@{/skader}"><button type="button">← Tilbage</button></a>
+
+        <a th:href="@{/skader}">
+            <button type="button">← Tilbage</button>
+        </a>
     </div>
 
     <form th:action="@{/skader/gem}" method="post">
 
+        <input type="hidden" name="id" value="0">
+
         <label>Vælg bil</label>
 
-        <select name="carId">
+        <select name="carId" required>
+            <option value="">-- Vælg bil --</option>
 
-            <option
-                    th:each="car : ${cars}"
+            <option th:each="car : ${cars}"
                     th:value="${car.id}"
-                    th:text="${car.brand + ' ' + car.model}">
+                    th:text="${car.brand + ' ' + car.model + ' - ' + car.vin}">
             </option>
-
         </select>
 
         <label>Vælg skader</label>
@@ -34,62 +40,42 @@
         <div class="checkboxes">
 
             <label>
-                <input type="checkbox"
-                       name="damage"
-                       value="500">
-
-                Bulk skade (500 kr)
+                <input type="checkbox" name="damage" value="Bule skade:500">
+                Bule skade (500 kr)
             </label>
 
             <label>
-                <input type="checkbox"
-                       name="damage"
-                       value="200">
-
+                <input type="checkbox" name="damage" value="Ridse:200">
                 Ridse (200 kr)
             </label>
 
             <label>
-                <input type="checkbox"
-                       name="damage"
-                       value="800">
-
+                <input type="checkbox" name="damage" value="Ødelagt lygte:800">
                 Ødelagt lygte (800 kr)
             </label>
 
         </div>
 
         <label>Beskrivelse</label>
-
-        <textarea name="description"></textarea>
+        <textarea name="description" required></textarea>
 
         <label>Dato</label>
-
-        <input type="date"
-               name="reportDate">
+        <input type="date" name="reportDate" required>
 
         <label>Total pris</label>
-
-        <input type="text"
-               value="Auto genereres"
-               disabled>
+        <input type="text" value="Beregnes når skaden gemmes" disabled>
 
         <div style="display:flex; gap:10px; margin-top:20px;">
-
-            <button type="submit">
-                Gem skade
-            </button>
+            <button type="submit">Gem skade</button>
 
             <a th:href="@{/skader}">
-                <button type="button">
-                    Cancel
-                </button>
+                <button type="button">Cancel</button>
             </a>
-
         </div>
 
     </form>
-</div>
-</body>
 
+</div>
+
+</body>
 </html>

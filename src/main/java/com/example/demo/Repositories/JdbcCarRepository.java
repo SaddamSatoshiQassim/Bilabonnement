@@ -91,22 +91,20 @@ public class JdbcCarRepository implements CarRepository {
         }
     }
     @Override
-    public void updateStatus(int carId, CarStatus carStatus){
-        String sql = "UPDATE car SET statud = ?  WHERE car_id = ?";
+    public void updateStatus(int carId, CarStatus carStatus) {
+        String sql = "UPDATE car SET status = ? WHERE car_id = ?";
 
-        try(Connection connection = DriverManager.getConnection(url,user,password)){
-            PreparedStatement statement = connection.prepareStatement(sql);{
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-                statement.setString(1, carStatus.name());
-                statement.setInt(2, carId);
+            statement.setString(1, carStatus.name());
+            statement.setInt(2, carId);
 
-                statement.executeUpdate();
+            statement.executeUpdate();
 
+        } catch (SQLException e) {
+            System.out.println("fejl: " + e.getMessage());
+        }
     }
-            }
-catch (SQLException e){
-    System.out.println("fejl: " + e.getMessage());
-}
-}
 
     }

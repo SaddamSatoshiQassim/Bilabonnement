@@ -1,9 +1,12 @@
 package com.example.demo.Services;
 
+import com.example.demo.Models.CarStatus;
 import com.example.demo.Models.DamageLine;
 import com.example.demo.Models.DamageReport;
+import com.example.demo.Repositories.CarRepository;
+import com.example.demo.Repositories.DamageLineRepository;
 import com.example.demo.Repositories.DamageReportRepository;
-import com.example.demo.Repositories.JDBCDamageReportRepository;
+import com.example.demo.Repositories.JdbcCarRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,10 +16,15 @@ import java.util.List;
 public class DamageService {
 
     private final DamageReportRepository repository;
+    private final DamageLineRepository damageLineRepository;
+    private final CarRepository carRepository;
 
-
-    public DamageService(DamageReportRepository repository) {
+    public DamageService(DamageReportRepository repository,
+                         DamageLineRepository damageLineRepository,
+                         CarRepository carRepository) {
         this.repository = repository;
+        this.damageLineRepository = damageLineRepository;
+        this.carRepository = carRepository;
     }
 
     public BigDecimal calculateTotalDamagePrice(List<DamageLine> damageLines) {
@@ -33,8 +41,20 @@ public class DamageService {
         return repository.findById(id);
     }
 
-    public void addDamageReport(DamageReport damageReport) {
-        repository.save(damageReport);
+    public void addDamageReport(DamageReport damageReport, List<String> damages) {
+        int reportId = repository.saveAndReturnId(damageReport);
+
+        if (damages != null) {
+            for (String damage : damages) {
+                String[] parts = damage.split(":");
+
+                String description = parts[0];
+                BigDecimal price = new BigDecimal(parts[1]);
+
+                DamageLine line = new DamageLine(0, reportId, description, price);
+                damageLineRepository.save(line);
+            }
+        }
     }
 
     public void updateDamageReport(DamageReport damageReport) {
