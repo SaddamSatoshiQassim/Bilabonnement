@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Models.Location;
 import com.example.demo.Models.RentalAgreement;
 import com.example.demo.Services.CarService;
 import com.example.demo.Services.CustomerService;
@@ -19,7 +20,9 @@ public class RentalAgreementController {
     private final CustomerService customerService;
     private final RentalAgreementService service;
 
-    public RentalAgreementController(RentalAgreementService service, CarService carService, CustomerService customerService) {
+    public RentalAgreementController(RentalAgreementService service,
+                                     CarService carService,
+                                     CustomerService customerService) {
         this.service = service;
         this.carService = carService;
         this.customerService = customerService;
@@ -36,14 +39,28 @@ public class RentalAgreementController {
         model.addAttribute("cars", carService.getAll());
         model.addAttribute("customers", customerService.getAllCustomers());
         model.addAttribute("agreement", new RentalAgreement());
-
         return "opret-aftale";
     }
 
     @PostMapping("/aftaler/gem")
     public String saveAgreement(@ModelAttribute RentalAgreement agreement) {
+
+        if (agreement.getRentalPrice() == null ||
+                agreement.getRentalPrice().compareTo(BigDecimal.ZERO) == 0) {
+            agreement.setRentalPrice(new BigDecimal("1000"));
+        }
+
+        if (agreement.getPickupLocation() == null) {
+            agreement.setPickupLocation(new Location());
+        }
+
+        if (agreement.getReturnLocation() == null) {
+            agreement.setReturnLocation(new Location());
+        }
+
         service.addAgreement(agreement);
         carService.markCarAsRented(agreement.getCarId());
+
         return "redirect:/aftaler";
     }
 }

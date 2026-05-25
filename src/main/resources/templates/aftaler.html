@@ -17,71 +17,34 @@
         <h1>Bil Reservationer</h1>
 
         <a th:href="@{/aftaler/opret}">
-            <button>Opret Aftale</button>
+            <button type="button">Opret Aftale</button>
         </a>
     </div>
 
     <table>
-
+        <thead>
         <tr>
             <th>Kunde ID</th>
             <th>Bil ID</th>
             <th>Start dato</th>
             <th>Slut dato</th>
+            <th>Afhentning</th>
+            <th>Aflevering</th>
             <th>Pris</th>
         </tr>
+        </thead>
 
-        <th:block th:each="agreement, stat : ${agreements}">
-
-            <tr>
-                <td th:text="${agreement.customerId}"></td>
-                <td th:text="${agreement.carId}"></td>
-                <td th:text="${agreement.startDate}"></td>
-                <td th:text="${agreement.endDate}"></td>
-                <td th:text="${agreement.rentalPrice}"></td>
-
-                <td>
-
-                    <button th:if="${!agreement.settled}"
-                            th:onclick="'document.getElementById(\'calc-' + ${stat.index} + '\').style.display=\'table-row\''">
-                        Beregn overkørsel
-                    </button>
-
-                    <span th:if="${agreement.settled}"
-                          th:text="${agreement.totalPrice + ' kr.'}">
-                    </span>
-
-                </td>
-            </tr>
-
-            <tr th:id="'calc-' + ${stat.index}" style="display:none;">
-                <td colspan="6">
-
-                    <form th:action="@{/aftaler/afregn/{id}(id=${agreement.id})}"
-                          method="post">
-
-                        <input type="number"
-                               name="paidKilometers"
-                               placeholder="Kilometer betalt for">
-
-                        <input type="number"
-                               name="drivenKilometers"
-                               placeholder="Kilometer kørt i alt">
-
-                        <button type="submit">Afregn Nu</button>
-
-                        <button type="button"
-                                th:onclick="'document.getElementById(\'calc-' + ${stat.index} + '\').style.display=\'none\''">
-                            Annuller
-                        </button>
-
-                    </form>
-
-                </td>
-            </tr>
-
-        </th:block>
-
+        <tbody>
+        <tr th:each="agreement : ${agreements}">
+            <td th:text="${agreement.customerId}"></td>
+            <td th:text="${agreement.carId}"></td>
+            <td th:text="${agreement.startDate}"></td>
+            <td th:text="${agreement.endDate}"></td>
+            <td th:text="${agreement.pickupLocation != null ? agreement.pickupLocation.name : ''}"></td>
+            <td th:text="${agreement.returnLocation != null ? agreement.returnLocation.name : ''}"></td>
+            <td th:text="${agreement.rentalPrice}"></td>
+        </tr>
+        </tbody>
     </table>
 
 </div>
