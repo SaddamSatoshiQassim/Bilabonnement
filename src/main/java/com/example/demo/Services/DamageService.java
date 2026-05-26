@@ -1,12 +1,10 @@
 package com.example.demo.Services;
 
-import com.example.demo.Models.CarStatus;
 import com.example.demo.Models.DamageLine;
 import com.example.demo.Models.DamageReport;
-import com.example.demo.Repositories.CarRepository;
+import com.example.demo.Models.RentalAgreement;
 import com.example.demo.Repositories.DamageLineRepository;
 import com.example.demo.Repositories.DamageReportRepository;
-import com.example.demo.Repositories.JdbcCarRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +16,17 @@ public class DamageService {
 
     private final DamageReportRepository repository;
     private final DamageLineRepository damageLineRepository;
-    private final CarRepository carRepository;
+    private final RentalAgreementService rentalAgreementService;
+    private final CarService carService;
 
     public DamageService(DamageReportRepository repository,
                          DamageLineRepository damageLineRepository,
-                         CarRepository carRepository) {
+                         RentalAgreementService rentalAgreementService,
+                         CarService carService) {
         this.repository = repository;
         this.damageLineRepository = damageLineRepository;
-        this.carRepository = carRepository;
+        this.rentalAgreementService = rentalAgreementService;
+        this.carService = carService;
     }
 
     public BigDecimal calculateTotalDamagePrice(List<DamageLine> damageLines) {
@@ -35,7 +36,29 @@ public class DamageService {
     }
 
     public List<DamageReport> getAllDamageReports() {
-        return repository.findAll();
+
+        List<DamageReport> damageReports =
+                repository.findAll();
+
+        for (DamageReport report : damageReports) {
+
+            List<DamageLine> damageLines =
+                    damageLineRepository.findByReportId(
+                            report.getId()
+                    );
+
+            report.setDamageLines(
+                    damageLines
+            );
+
+            report.setTotalPrice(
+                    calculateTotalDamagePrice(
+                            damageLines
+                    )
+            );
+        }
+
+        return damageReports;
     }
 
     public DamageReport getDamageReportById(int id) {
@@ -44,6 +67,7 @@ public class DamageService {
 
     @Transactional
     public void addDamageReport(DamageReport damageReport, List<String> damages) {
+
         int reportId = repository.saveAndReturnId(damageReport);
 
         if (damages != null) {
@@ -57,6 +81,11 @@ public class DamageService {
                 damageLineRepository.save(line);
             }
         }
+
+        RentalAgreement rentalAgreement =
+                rentalAgreementService.getAgreementById(damageReport.getRentalId());
+
+        carService.markCarAsDamaged(rentalAgreement.getCarId());
     }
 
     @Transactional
@@ -68,4 +97,5 @@ public class DamageService {
     public void deleteDamageReportById(int id) {
         repository.deleteById(id);
     }
+
 }

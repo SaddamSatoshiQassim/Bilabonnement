@@ -22,9 +22,9 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
         Map<Integer, DamageReport> reports = new LinkedHashMap<>();
 
         String sql = """
-                SELECT 
+                SELECT
                     dr.report_id,
-                    dr.car_id,
+                    dr.rental_id,
                     dr.report_date,
                     dr.description AS report_description,
                     dl.damage_line_id,
@@ -32,9 +32,9 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
                     dl.price,
                     COALESCE(SUM(dl.price) OVER(PARTITION BY dr.report_id), 0) AS total_price
                 FROM damage_report dr
-                LEFT JOIN damage_line dl 
-                    ON dr.report_id = dl.report_id 
-                    ORDER BY dr.report_id DESC
+                LEFT JOIN damage_line dl
+                    ON dr.report_id = dl.report_id
+                ORDER BY dr.report_id DESC
                 """;
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
@@ -49,13 +49,12 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
                 if (report == null) {
                     report = new DamageReport(
                             resultSet.getInt("report_id"),
-                            resultSet.getInt("car_id"),
+                            resultSet.getInt("rental_id"),
                             resultSet.getDate("report_date").toLocalDate(),
                             resultSet.getString("report_description")
                     );
 
                     report.setTotalPrice(resultSet.getBigDecimal("total_price"));
-
                     reports.put(reportId, report);
                 }
 
@@ -82,7 +81,20 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
 
     @Override
     public DamageReport findById(int id) {
-        String sql = "SELECT dr.report_id, dr.car_id, dr.report_date, dr.description AS report_description, dl.damage_line_id, dl.description AS line_description, dl.price FROM damage_report dr LEFT JOIN damage_line dl ON dr.report_id = dl.report_id WHERE dr.report_id = ?";
+        String sql = """
+                SELECT
+                    dr.report_id,
+                    dr.rental_id,
+                    dr.report_date,
+                    dr.description AS report_description,
+                    dl.damage_line_id,
+                    dl.description AS line_description,
+                    dl.price
+                FROM damage_report dr
+                LEFT JOIN damage_line dl
+                    ON dr.report_id = dl.report_id
+                WHERE dr.report_id = ?
+                """;
 
         DamageReport report = null;
 
@@ -97,7 +109,7 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
                 if (report == null) {
                     report = new DamageReport(
                             resultSet.getInt("report_id"),
-                            resultSet.getInt("car_id"),
+                            resultSet.getInt("rental_id"),
                             resultSet.getDate("report_date").toLocalDate(),
                             resultSet.getString("report_description")
                     );
@@ -126,12 +138,12 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
 
     @Override
     public void save(DamageReport damageReport) {
-        String sql = "INSERT INTO damage_report (car_id, report_date, description) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO damage_report (rental_id, report_date, description) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, damageReport.getCarId());
+            statement.setInt(1, damageReport.getRentalId());
             statement.setDate(2, Date.valueOf(damageReport.getReportDate()));
             statement.setString(3, damageReport.getDescription());
 
@@ -145,15 +157,15 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
     @Override
     public void update(DamageReport damageReport) {
         String sql = """
-                UPDATE damage_report 
-                SET car_id = ?, report_date = ?, description = ?
+                UPDATE damage_report
+                SET rental_id = ?, report_date = ?, description = ?
                 WHERE report_id = ?
                 """;
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, damageReport.getCarId());
+            statement.setInt(1, damageReport.getRentalId());
             statement.setDate(2, Date.valueOf(damageReport.getReportDate()));
             statement.setString(3, damageReport.getDescription());
             statement.setInt(4, damageReport.getId());
@@ -187,15 +199,14 @@ public class JDBCDamageReportRepository implements DamageReportRepository {
         }
     }
 
-
     @Override
     public int saveAndReturnId(DamageReport damageReport) {
-        String sql = "INSERT INTO damage_report (car_id, report_date, description) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO damage_report (rental_id, report_date, description) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setInt(1, damageReport.getCarId());
+            statement.setInt(1, damageReport.getRentalId());
             statement.setDate(2, Date.valueOf(damageReport.getReportDate()));
             statement.setString(3, damageReport.getDescription());
 
