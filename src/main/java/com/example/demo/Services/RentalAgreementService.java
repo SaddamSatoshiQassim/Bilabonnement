@@ -1,12 +1,14 @@
 package com.example.demo.Services;
 
 import com.example.demo.Models.Car;
+import com.example.demo.Models.CarStatus;
 import com.example.demo.Models.RentalAgreement;
 import com.example.demo.Repositories.RentalAgreementRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -20,7 +22,6 @@ public class RentalAgreementService {
         this.repository = repository;
         this.carService = carService;
     }
-
 
     public List<RentalAgreement> getAllAgreements() {
         return repository.findAll();
@@ -49,6 +50,10 @@ public class RentalAgreementService {
             throw new IllegalArgumentException("Slutdato skal udfyldes");
         }
 
+        if (agreement.getStartDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Startdato skal være fra dagsdato eller frem");
+        }
+
         if (agreement.getEndDate().isBefore(agreement.getStartDate())) {
             throw new IllegalArgumentException("Slutdato kan ikke være før startdato");
         }
@@ -57,6 +62,14 @@ public class RentalAgreementService {
 
         if (car == null) {
             throw new IllegalArgumentException("Den valgte bil findes ikke");
+        }
+
+        if (car == null) {
+            throw new IllegalArgumentException("Bilen findes ikke");
+        }
+
+        if (car.getStatus() != CarStatus.AVAILABLE) {
+            throw new IllegalArgumentException("Bilen er allerede udlejet eller ikke ledig");
         }
 
         long days = ChronoUnit.DAYS.between(
@@ -75,10 +88,15 @@ public class RentalAgreementService {
 
         if (agreement.getId() == 0) {
             repository.save(agreement);
+            carService.markCarAsRented(agreement.getCarId());
         } else {
             repository.update(agreement);
         }
 
         carService.markCarAsRented(agreement.getCarId());
+    }
+
+    public void addAgreement(RentalAgreement agreement) {
+        saveOrUpdateAgreement(agreement);
     }
 }
