@@ -34,15 +34,13 @@ CREATE TABLE rental_agreement (
                                   FOREIGN KEY (car_id) REFERENCES car(car_id)
 );
 
-
-
 CREATE TABLE damage_report (
                                report_id INT AUTO_INCREMENT PRIMARY KEY,
-                               car_id INT NOT NULL,
+                               rental_id INT NOT NULL,
                                report_date DATE NOT NULL,
                                description VARCHAR(255),
 
-                               FOREIGN KEY (car_id) REFERENCES car(car_id)
+                               FOREIGN KEY (rental_id) REFERENCES rental_agreement(rental_id)
 );
 
 CREATE TABLE damage_line (
@@ -53,27 +51,23 @@ CREATE TABLE damage_line (
 
                              FOREIGN KEY (report_id) REFERENCES damage_report(report_id)
 );
+
 CREATE TABLE users (
-
-                       user_id INT PRIMARY KEY AUTO_INCREMENT,
-
+                       user_id INT AUTO_INCREMENT PRIMARY KEY,
                        username VARCHAR(50),
-
                        password VARCHAR(50)
-
 );
 
-
 INSERT INTO car (vin, brand, model, status, purchase_price) VALUES
-('VIN0001', 'BMW', '320i', 'AVAILABLE', 699),
-('VIN0002', 'BMW', '520d', 'AVAILABLE', 849),
-('VIN0003', 'BMW', 'X5', 'AVAILABLE', 1299),
-('VIN0004', 'Mercedes', 'E200', 'AVAILABLE', 899),
-('VIN0005', 'Mercedes', 'E220', 'AVAILABLE', 949),
-('VIN0006', 'Mercedes', 'GLC', 'AVAILABLE', 1199),
-('VIN0007', 'Toyota', 'Auris', 'AVAILABLE', 449),
-('VIN0008', 'Toyota', 'Corolla', 'AVAILABLE', 499),
-('VIN0009', 'Toyota', 'Yaris', 'AVAILABLE', 399),
-('VIN0010', 'Volkswagen', 'Golf', 'AVAILABLE', 549),
-('VIN0011', 'Volkswagen', 'Passat', 'AVAILABLE', 649),
-('VIN0012', 'Volkswagen', 'Polo', 'AVAILABLE', 399);
+                                                                ('VIN0001', 'BMW', '320i', 'AVAILABLE', 699),
+                                                                ('VIN0002', 'BMW', '520d', 'AVAILABLE', 849),
+                                                                ('VIN0003', 'BMW', 'X5', 'AVAILABLE', 1299),
+                                                                ('VIN0004', 'Mercedes', 'E200', 'AVAILABLE', 899),
+                                                                ('VIN0005', 'Mercedes', 'E220', 'AVAILABLE', 949),
+                                                                ('VIN0006', 'Mercedes', 'GLC', 'AVAILABLE', 1199),
+                                                                ('VIN0007', 'Toyota', 'Auris', 'AVAILABLE', 449),
+                                                                ('VIN0008', 'Toyota', 'Corolla', 'AVAILABLE', 499),
+                                                                ('VIN0009', 'Toyota', 'Yaris', 'AVAILABLE', 399),
+                                                                ('VIN0010', 'Volkswagen', 'Golf', 'AVAILABLE', 549),
+                                                                ('VIN0011', 'Volkswagen', 'Passat', 'AVAILABLE', 649),
+                                                                ('VIN0012', 'Volkswagen', 'Polo', 'AVAILABLE', 399);

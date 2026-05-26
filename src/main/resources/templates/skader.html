@@ -1,37 +1,85 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<html lang="da"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Skader</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Skaderapporter</title>
+
+    <link rel="stylesheet"
+          th:href="@{/style.css}">
 </head>
 
 <body>
 
-<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+<div th:replace="~{fragments/sidebar :: sidebar}">
+</div>
 
 <div class="content">
 
-    <h1>Skader</h1>
+    <h1>Skaderapporter</h1>
 
     <a th:href="@{/skader/opret}">
-        <button type="button">Opret skade</button>
+        Opret ny skaderapport
     </a>
 
+    <br><br>
+
     <table>
+
+        <thead>
+
         <tr>
+
+            <th>ID</th>
+            <th>Kunde</th>
+            <th>Bil</th>
             <th>Dato</th>
-            <th>Bil ID</th>
             <th>Beskrivelse</th>
-            <th>Pris</th>
+            <th>Skadepris</th>
+
         </tr>
 
-        <tr th:each="damage : ${damageReports}">
-            <td th:text="${damage.reportDate}"></td>
-            <td th:text="${damage.carId}"></td>
-            <td th:text="${damage.description}"></td>
-            <td th:text="${damage.totalPrice + ' kr'}"></td>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="report : ${damageReports}">
+
+            <td th:text="${report.id}">
+            </td>
+
+            <td>
+
+                <span th:each="rental : ${rentalAgreements}"
+                      th:if="${rental.id == report.rentalId}"
+                      th:text="${rental.customerName}">
+                </span>
+
+            </td>
+
+            <td>
+
+                <span th:each="rental : ${rentalAgreements}"
+                      th:if="${rental.id == report.rentalId}"
+                      th:text="${rental.carModel}">
+                </span>
+
+            </td>
+
+            <td th:text="${report.reportDate}">
+            </td>
+
+            <td th:text="${report.description}">
+            </td>
+
+            <td th:text="${report.totalPrice + ' kr.'}">
+            </td>
+
         </tr>
+
+        </tbody>
+
     </table>
 
 </div>

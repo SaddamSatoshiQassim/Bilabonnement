@@ -1,52 +1,66 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.DamageReport;
-import com.example.demo.Services.CarService;
-import com.example.demo.Services.CustomerService;
 import com.example.demo.Services.DamageService;
+import com.example.demo.Services.RentalAgreementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 public class DamageReportController {
 
-    private final DamageService service;
-    private final CarService carService;
+    private final DamageService damageService;
+    private final RentalAgreementService rentalAgreementService;
 
+    public DamageReportController(
+            DamageService damageService,
+            RentalAgreementService rentalAgreementService) {
 
-    public DamageReportController(DamageService service, CarService carService) {
-        this.carService = carService;
-        this.service = service;
+        this.damageService = damageService;
+        this.rentalAgreementService = rentalAgreementService;
     }
 
     @GetMapping("/skader")
     public String getAllDamageReports(Model model) {
-        model.addAttribute("damageReports", service.getAllDamageReports());
+
+        model.addAttribute(
+                "damageReports",
+                damageService.getAllDamageReports());
+
+        model.addAttribute(
+                "rentalAgreements",
+                rentalAgreementService.getAllAgreements());
+
         return "skader";
     }
 
     @GetMapping("/skader/opret")
     public String createForm(Model model) {
 
-        model.addAttribute("damageReport",
-                new DamageReport(0, 0, null, null));
+        model.addAttribute(
+                "damageReport",
+                new DamageReport(0,0,null,null));
 
-        model.addAttribute("cars", carService.getAll());
+        model.addAttribute(
+                "rentalAgreements",
+                rentalAgreementService.getAllAgreements());
 
         return "opret-skade";
     }
-    @PostMapping("/skader/gem")
-    public String saveDamageReport(@ModelAttribute DamageReport damageReport,
-                                   @RequestParam(required = false) List<String> damage) {
 
-        service.addDamageReport(damageReport, damage);
-        carService.markCarAsDamaged(damageReport.getCarId());
+    @PostMapping("/skader/gem")
+    public String saveDamageReport(
+            @ModelAttribute DamageReport damageReport,
+            @RequestParam(required = false)
+            List<String> damage) {
+
+        damageService.addDamageReport(
+                damageReport,
+                damage);
+
         return "redirect:/skader";
     }
 }

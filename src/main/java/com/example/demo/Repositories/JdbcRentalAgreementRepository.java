@@ -20,45 +20,23 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
 
         List<RentalAgreement> rentalAgreements = new ArrayList<>();
 
-        String sql =
-                "SELECT ra.*, c.name AS customer_name, car.model AS car_model " +
-                        "FROM rental_agreement ra " +
-                        "JOIN customer c ON ra.customer_id = c.customer_id " +
-                        "JOIN car car ON ra.car_id = car.car_id";
+        String sql = """
+                SELECT ra.*,
+                       c.name AS customer_name,
+                       car.brand AS car_brand,
+                       car.model AS car_model
+                FROM rental_agreement ra
+                JOIN customer c ON ra.customer_id = c.customer_id
+                JOIN car car ON ra.car_id = car.car_id
+                """;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-
+        try (
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()
+        ) {
             while (resultSet.next()) {
-
-                Location pickupLocation =
-                        new Location(resultSet.getString("pickup_location"));
-
-                Location returnLocation =
-                        new Location(resultSet.getString("return_location"));
-
-                RentalAgreement rentalAgreement =
-                        new RentalAgreement(
-                                resultSet.getInt("rental_id"),
-                                resultSet.getInt("customer_id"),
-                                resultSet.getInt("car_id"),
-                                resultSet.getDate("start_date").toLocalDate(),
-                                resultSet.getDate("end_date") != null
-                                        ? resultSet.getDate("end_date").toLocalDate()
-                                        : null,
-                                resultSet.getBigDecimal("rental_price"),
-                                pickupLocation,
-                                returnLocation
-                        );
-
-                rentalAgreement.setCustomerName(
-                        resultSet.getString("customer_name"));
-
-                rentalAgreement.setCarModel(
-                        resultSet.getString("car_model"));
-
-                rentalAgreements.add(rentalAgreement);
+                rentalAgreements.add(mapRow(resultSet));
             }
 
         } catch (SQLException e) {
@@ -71,35 +49,27 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
     @Override
     public RentalAgreement findById(int id) {
 
-        String sql = "SELECT * FROM rental_agreement WHERE rental_id=?";
+        String sql = """
+                SELECT ra.*,
+                       c.name AS customer_name,
+                       car.brand AS car_brand,
+                       car.model AS car_model
+                FROM rental_agreement ra
+                JOIN customer c ON ra.customer_id = c.customer_id
+                JOIN car car ON ra.car_id = car.car_id
+                WHERE ra.rental_id = ?
+                """;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
+        try (
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
             statement.setInt(1, id);
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-
-                Location pickupLocation =
-                        new Location(resultSet.getString("pickup_location"));
-
-                Location returnLocation =
-                        new Location(resultSet.getString("return_location"));
-
-                return new RentalAgreement(
-                        resultSet.getInt("rental_id"),
-                        resultSet.getInt("customer_id"),
-                        resultSet.getInt("car_id"),
-                        resultSet.getDate("start_date").toLocalDate(),
-                        resultSet.getDate("end_date") != null
-                                ? resultSet.getDate("end_date").toLocalDate()
-                                : null,
-                        resultSet.getBigDecimal("rental_price"),
-                        pickupLocation,
-                        returnLocation
-                );
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapRow(resultSet);
+                }
             }
 
         } catch (SQLException e) {
@@ -112,11 +82,16 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
     @Override
     public void save(RentalAgreement rentalAgreement) {
 
-        String sql = "INSERT INTO rental_agreement(customer_id, car_id, start_date, end_date, rental_price, pickup_location, return_location) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = """
+                INSERT INTO rental_agreement
+                (customer_id, car_id, start_date, end_date, rental_price, pickup_location, return_location)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
+        try (
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
             statement.setInt(1, rentalAgreement.getCustomerId());
             statement.setInt(2, rentalAgreement.getCarId());
             statement.setDate(3, Date.valueOf(rentalAgreement.getStartDate()));
@@ -141,11 +116,22 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
     @Override
     public void update(RentalAgreement rentalAgreement) {
 
-        String sql = "UPDATE rental_agreement SET customer_id=?, car_id=?, start_date=?, end_date=?, rental_price=?, pickup_location=?, return_location=? WHERE rental_id=?";
+        String sql = """
+                UPDATE rental_agreement
+                SET customer_id = ?,
+                    car_id = ?,
+                    start_date = ?,
+                    end_date = ?,
+                    rental_price = ?,
+                    pickup_location = ?,
+                    return_location = ?
+                WHERE rental_id = ?
+                """;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
+        try (
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
             statement.setInt(1, rentalAgreement.getCustomerId());
             statement.setInt(2, rentalAgreement.getCarId());
             statement.setDate(3, Date.valueOf(rentalAgreement.getStartDate()));
@@ -171,17 +157,47 @@ public class JdbcRentalAgreementRepository implements RentalAgreementRepository 
     @Override
     public void deleteById(int id) {
 
-        String sql = "DELETE FROM rental_agreement WHERE rental_id=?";
+        String sql = "DELETE FROM rental_agreement WHERE rental_id = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
+        try (
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
             statement.setInt(1, id);
-
             statement.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Fejl: kunne ikke slette aftale " + e.getMessage());
         }
+    }
+
+    private RentalAgreement mapRow(ResultSet resultSet) throws SQLException {
+
+        Location pickupLocation =
+                new Location(resultSet.getString("pickup_location"));
+
+        Location returnLocation =
+                new Location(resultSet.getString("return_location"));
+
+        RentalAgreement rentalAgreement =
+                new RentalAgreement(
+                        resultSet.getInt("rental_id"),
+                        resultSet.getInt("customer_id"),
+                        resultSet.getInt("car_id"),
+                        resultSet.getDate("start_date").toLocalDate(),
+                        resultSet.getDate("end_date") != null
+                                ? resultSet.getDate("end_date").toLocalDate()
+                                : null,
+                        resultSet.getBigDecimal("rental_price"),
+                        pickupLocation,
+                        returnLocation
+                );
+
+        rentalAgreement.setCustomerName(resultSet.getString("customer_name"));
+        rentalAgreement.setCarModel(
+                resultSet.getString("car_brand") + " " + resultSet.getString("car_model")
+        );
+
+        return rentalAgreement;
     }
 }
