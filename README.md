@@ -1,4 +1,4 @@
-Link til azure:
+Link til azure: https://bilabonnement-app-d7adcaerhqhhb3dc.spaincentral-01.azurewebsites.net/login;jsessionid=F85B42FF54C1EEF91F83398CEE594041
 # Bilabonnement
 Et webbaseret system til håndtering af biludlejning, lejeaftaler, skader og kunder. Bygget med Spring Boot og MySQL.
 
