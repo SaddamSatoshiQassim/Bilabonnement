@@ -23,6 +23,11 @@
 
     <form th:action="@{/aftaler/gem}" method="post">
 
+        <p th:if="${errorMessage}"
+           th:text="${errorMessage}"
+           style="color:red;">
+        </p>
+
         <label>Vælg kunde</label>
         <select name="customerId" required>
             <option value="">-- Vælg kunde --</option>
@@ -34,11 +39,13 @@
 
         <label>Start dato</label>
         <input type="date"
+               id="startDate"
                name="startDate"
                required>
 
         <label>Slut dato</label>
         <input type="date"
+               id="endDate"
                name="endDate"
                required>
 
@@ -86,6 +93,19 @@
     </form>
 
 </div>
+
+<script>
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+
+    startDate.addEventListener("change", function () {
+        endDate.min = startDate.value;
+
+        if (endDate.value && endDate.value < startDate.value) {
+            endDate.value = startDate.value;
+        }
+    });
+</script>
 
 </body>
 </html>

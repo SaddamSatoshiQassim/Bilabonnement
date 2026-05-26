@@ -55,6 +55,10 @@ public class RentalAgreementService {
 
         Car car = carService.findById(agreement.getCarId());
 
+        if (car == null) {
+            throw new IllegalArgumentException("Den valgte bil findes ikke");
+        }
+
         long days = ChronoUnit.DAYS.between(
                 agreement.getStartDate(),
                 agreement.getEndDate()
@@ -74,5 +78,7 @@ public class RentalAgreementService {
         } else {
             repository.update(agreement);
         }
+
+        carService.markCarAsRented(agreement.getCarId());
     }
 }

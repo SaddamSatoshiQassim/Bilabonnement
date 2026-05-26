@@ -75,9 +75,19 @@ public class RentalAgreementController {
 
     @PostMapping("/aftaler/gem")
     public String saveAgreement(
-            @ModelAttribute RentalAgreement agreement) {
+            @ModelAttribute RentalAgreement agreement,
+            Model model) {
 
-        service.saveOrUpdateAgreement(agreement);
+        try {
+            service.saveOrUpdateAgreement(agreement);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("agreement", agreement);
+            model.addAttribute("cars", carService.getAll());
+            model.addAttribute("customers", customerService.getAllCustomers());
+
+            return "opret-aftale";
+        }
 
         return "redirect:/aftaler";
     }
